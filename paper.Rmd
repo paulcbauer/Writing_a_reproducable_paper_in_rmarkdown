@@ -83,12 +83,12 @@ install.packages(c("rmarkdown", "knitr", "kableExtra",
                    "stargazer", "plotly", "knitr",
                    "bookdown"))
 ```
-* ...download the 4 input files I created (see below) from [this folder](https://drive.google.com/drive/folders/1zJP3cNPrHN-gj0rcmbHQgg-XA0hqDXdd?usp=sharing).
+* ...download the 5 input files I created --- `paper.rmd`, `header.tex`, `references.bib`, `data.csv` and `american-sociological-association.csl` --- from [this folder](https://drive.google.com/drive/folders/1zJP3cNPrHN-gj0rcmbHQgg-XA0hqDXdd?usp=sharing). Ignore the other files.
 
 * ...learn R and read about the other underlying components namely [Markdown](https://en.wikipedia.org/wiki/Markdown), [R Markdown](https://rmarkdown.rstudio.com/lesson-1.html) and [Latex](https://en.wikipedia.org/wiki/LaTeX).
 
 # Basics: Input and output files
-All the files you need to produce the present PDF file are 4 input files...
+All the files you need to produce the present PDF file are the input files...
 
 * ...a `paper.rmd` file (the underlying R Markdown file).
 * ...a `header.tex` file (a tex file for document structure).
