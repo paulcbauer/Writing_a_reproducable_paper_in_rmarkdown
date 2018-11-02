@@ -1,0 +1,300 @@
+---
+title: |
+  |
+  | 
+  | \vspace{1cm}Writing a reproducible paper
+  | in R Markdown*^[*Corresponding address: mail@paulcbauer.eu. Acknowledgments: I am grateful to all those generous people that invest their time into open-source software.]\vspace{0.5cm}
+  |
+author: |
+  | Paul C. Bauer
+  | Mannheim Centre for European Social Research
+date: |
+  |       
+  |
+  | `r gsub("^0", "", format(Sys.time(), "%d %B, %Y"))`
+  |
+  | Feedback? 
+  | mail@paulcbauer.eu
+  |
+linestretch: 1.2
+colorlinks: true
+abstract: \noindent\setstretch{1}The present paper provides a template for a reproducable scientific paper written in R Markdown. Below I outline some of the "tricks"/code (e.g., referencing tables, sections etc.) I had to figure out to produce this document. The underlying files which produce this document can be downloaded [here](https://drive.google.com/drive/folders/1zJP3cNPrHN-gj0rcmbHQgg-XA0hqDXdd?usp=sharing). I think I got pretty far but there is always room for improvement and more automatization, in parallel to the incredible developments in R and Rstudio (bookdown etc.). My last paper is almost entirely based on R Markdown [see @Bauer2018-hd and [reproduction files](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/DUMGLT)]. I intend to update this file when I discover more convenient code.\vspace{.8cm}
+bibliography: references.bib
+csl: american-sociological-association.csl
+output: 
+  bookdown::pdf_document2:
+    includes:
+      in_header: header.tex
+    toc: no
+    keep_tex: true
+mainfont: Times New Roman
+sansfont: Times New Roman
+fontsize: 12pt
+link-citations: true
+documentclass: article
+geometry: margin=1in
+always_allow_html: yes
+header-includes:
+   - \usepackage{dcolumn}
+   - \usepackage{color}
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = FALSE)
+# Use chache = TRUE if you want to speed up compilation
+
+# A function to allow for showing some of the inline code
+rinline <- function(code){
+  html <- '<code  class="r">``` `r CODE` ```</code>'
+  sub("CODE", code, html)
+}
+```
+
+\clearpage
+
+\renewcommand{\baselinestretch}{0.5}\normalsize
+\tableofcontents
+\renewcommand{\baselinestretch}{1.1}\normalsize
+
+\clearpage
+
+# Why reproducible research (in R)?
+Some arguments...
+
+* **Access**: Research is normally funded by taxpayers (researchers are also taxpayers). Hence, it should be freely accessible to everyone without any barriers, e.g., without requiring commercial software. Importantly, researchers from developing countries are even more dependent on free access to knowledge [@Kirsop2005-ro].
+* **Reproducability**: Even if you have written a study and analyzed the data yourself you will forget what you did after a few months. A fully reproducable setup will help you to trace back your own steps. Obviously, the same is true for other researchers who may want to understand your work and built on it. It may sound like a joke but why not aim for a document that can be used to reproduce your findings in in 500 years. 
+* **Errors**: Manual steps in data analysis (e.g., manually copy/pasting values into a table etc.) may introduce errors. R Markdown allows you to **automatize** such steps and/or avoid them.
+* **Revisions**: Revising a paper takes much less time if you have all the code you need in one place, i.e., one `.rmd` file. For instance, if you decide to exclude a subset of your data you simply need to insert one line of your code at the beginning and everything is rebuilt/re-estimated automatically.
+
+
+# Prerequesites
+I assume that you are using R on a day-to-day basis. You may have even started to work a little in R Markdown but you don't write your complete paper in R Markdown. If you don't know what R Markdown is watch [this short video](https://vimeo.com/178485416). Then...
+
+* ...install [R](https://www.r-project.org/) and [Rstudio](https://www.rstudio.com/) (most recent versions) [@R2017; @Rstudio2015].
+* ...install [tinytex](https://yihui.name/tinytex/), a lightweight version of Tex Live [@markdown2017; @tinytex].
+```{r eval=FALSE, include=TRUE}
+install.packages(c('tinytex', 'rmarkdown'))
+tinytex::install_tinytex()
+```
+* ...install the packages below using the code below [@bookdown1; @bookdown2; @knitr1; @knitr2; @knitr3; @kableextra; @plotly].
+```{r eval=FALSE, include=TRUE}
+install.packages(c("rmarkdown", "knitr", "kableExtra",
+                   "stargazer", "plotly", "knitr",
+                   "bookdown"))
+```
+* ...download the 4 input files I created (see below) from [this folder](https://drive.google.com/drive/folders/1zJP3cNPrHN-gj0rcmbHQgg-XA0hqDXdd?usp=sharing).
+
+* ...learn R and read about the other underlying components namely [Markdown](https://en.wikipedia.org/wiki/Markdown), [R Markdown](https://rmarkdown.rstudio.com/lesson-1.html) and [Latex](https://en.wikipedia.org/wiki/LaTeX).
+
+# Basics: Input and output files
+All the files you need to produce the present PDF file are 4 input files...
+
+* ...a `paper.rmd` file (the underlying R Markdown file).
+* ...a `header.tex` file (a tex file for document structure).
+* ...a `references.bib` file (the bibliography).
+    + I use paperpile to manage my references and export the `.bib` file into the folder that contains my `.rmd` file.
+* ...a `data.csv` file (some raw data).
+* ... a `american-sociological-association.csl` file that defines the style of your bibliography.^[You can download various citation style files from this webpage: https://github.com/citation-style-language/styles.] 
+
+[Download these files](https://drive.google.com/drive/folders/1zJP3cNPrHN-gj0rcmbHQgg-XA0hqDXdd?usp=sharing) and save them into a folder. Close R/Rstudio and directly open `paper.rmd` with RStudio. Doing so assures that the working directory is set to the folder that contains `paper.rmd` and the other files.^[You can always check your working directory in R with `getwd()`.]
+
+Once you run/compile the `paper.rmd` file in Rstudio it creates mainly two output files:
+
+* `paper.tex`
+* `paper.pdf` (the one you are reading right now)
+
+In addition, there may be files that you generate and store locally in the folder during the compilation process. This is the case for some of the Plotly graphs below.
+
+Ideally, we can simply provide others with a `zip` folder that contains both our input files and our output files. Then it's possible to reproduce the process from managing/analyzing some raw data to producing the final scientific article.
+
+Below we always display the R code in the chunks that produce the output. In your paper you will normally only present outputs (e.g., tables, figures etc.) by choosing the chunk option "Show output only" in R Studio. The chunk commands itself are not displayed but they do matter for referencing etc. So simply orient yourself at the underlying `paper.rmd` file.
+
+# Referencing within your document
+
+To see how referencing works simply see the different examples for figures, tables and sections below. For instance in Section \@ref(sec:tables) you can find different ways of referencing tables. The code of the underlying `paper.rmd` will show you how I referenced Section \@ref(sec:tables) right here namely with '`Section \@ref(sec:tables)`'.
+
+
+# Software versioning
+Software changes and gets updated, especially with an active developer community like that of R. Luckily you can always access [old versions of R](https://cran.r-project.org/bin/windows/base/old/) and old version of R packages in [the archive](https://cran.r-project.org/src/contrib/Archive/). In the archive you need to choose a particular package, e.g dplyr and search for the right version, e.g., `dplyr_0.2.tar.gz`. Then insert the path in the following function: `install.packages("https://....../dplyr_0.2.tar.gz", repos=NULL, type="source")`. Ideally, however, results will be simply reproducible in the most current R and package versions.
+
+I would recommend to use the command below and copy/paste the output into the first R chunk in your `paper.rmd` file. Normally we would do this when we compile/generate the paper for the last time. For more advanced tools see [packrat](https://rstudio.github.io/packrat/).
+
+```{r fig-versioning, echo=TRUE}
+cat(paste("#", capture.output(sessionInfo()), "\n", collapse ="")) 
+  # or use message() instead of cat()
+```
+
+
+
+# Data
+## Import
+```{r, echo=TRUE}
+data <- read.csv("data.csv")
+head(data)
+```
+
+
+## Putting your entire data into the .rmd file
+Applying the function `dput()` to an object gives you the code needed to reproduce that object. So you could paste that code into your `.rmd` file if you don't want to have extra data files. This makes sense were data files are small.
+
+```{r}
+dput(data)
+```
+
+You can then insert the dput output in your `.rmd` as below.
+
+```{r eval=FALSE, include=TRUE}
+data <- structure(list(X = 1:50, speed = c(4L, 4L, 7L, 7L, 8L, 9L, 10L, 
+10L, 10L, 11L, 11L, 12L, 12L, 12L, 12L, 13L, 13L, 13L, 13L, 14L, 
+14L, 14L, 14L, 15L, 15L, 15L, 16L, 16L, 17L, 17L, 17L, 18L, 18L, 
+18L, 18L, 19L, 19L, 19L, 20L, 20L, 20L, 20L, 20L, 22L, 23L, 24L, 
+24L, 24L, 24L, 25L), dist = c(2L, 10L, 4L, 22L, 16L, 10L, 18L, 
+26L, 34L, 17L, 28L, 14L, 20L, 24L, 28L, 26L, 34L, 34L, 46L, 26L, 
+36L, 60L, 80L, 20L, 26L, 54L, 32L, 40L, 32L, 40L, 50L, 42L, 56L, 
+76L, 84L, 36L, 46L, 68L, 32L, 48L, 52L, 56L, 64L, 66L, 54L, 70L, 
+92L, 93L, 120L, 85L)), 
+class = "data.frame", row.names = c(NA, 
+-50L))
+```
+
+# Tables {#sec:tables}
+Producing good tables and referencing these tables within a R Markdown PDF has been a hassle but got much better. Examples that you may use are shown below. The way you reference tables is slightly different, e.g., for `stargazer` the label is contained in the function, for `kable` it's contained in the chunk name.
+
+## stargazer(): Summary and regression tables
+
+Table \@ref(tab-summarystats) shows summary stats of your data. I normally use `stargazer()` [@hlavac2013stargazer] which offers extreme flexibility regarding table output (see `?stargazer`). 
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE, results="asis"}
+library(stargazer)
+stargazer(cars, 
+          title = "Summary table with stargazer",
+          label="tab-summarystats", 
+          table.placement = "H", 
+          header=FALSE)
+```
+
+Table \@ref(tab-regression) shows the output for a regression table. Make sure you name all your models and explicitly refer to model names (M1, M2 etc.) in the text.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE, results="asis"}
+library(stargazer)
+model1 <- lm(speed ~ dist, data = cars)
+model2 <- lm(speed ~ dist, data = cars)
+model3 <- lm(dist ~ speed, data = cars)
+stargazer(model1, model2, model3,
+          title = "Regression table with stargazer",
+          label="tab-regression", 
+          table.placement = "H", 
+          column.labels = c("M1", "M2", "M3"),
+          model.numbers = FALSE,
+          header=FALSE)
+```
+
+## kable() and kable_styling()
+
+Another great function is `kable()` (`knitr` package) in combination with `kableExtra`. Table \@ref(tab:tab-kabletable) provides an example. Again you can modify so many things in both the `kable()` and the `kable_styling()` function. See [this overview](https://haozhu233.github.io/kableExtra/awesome_table_in_pdf.pdf) of all the kable stylings that are possible provided by the package author himself.
+
+```{r tab-kabletable, echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE, results="asis"}
+library(knitr)
+library(kableExtra)
+kable(cars[1:10,], row.names = TRUE, caption = 'Table with kable() and kablestyling()', 
+      format = "latex", booktabs = T) %>%
+        kable_styling(full_width = T, 
+                      latex_options = c("striped", 
+                                        "scale_down",
+                                        "HOLD_position"),
+                      font_size = 10)
+```
+
+# Inline code & results
+Reproduction reaches new heights when you work with inline code. For instance, you can automatize the display of certain coefficients within the text. An example is to include estimates, e.g., the coefficient of `dist` of the model we ran above. `r rinline("round(coef(model1)[2], 2)")` will insert the coefficient as follows: `r round(coef(model1)[2], 2)`. Or `r rinline("3 + 7")` will insert a `r 3 + 7` in the text.      
+Inline code/results that depend on earlier objects in your document will automatically be updated once you change those objects. For instance, imagine a reviewer asks you to omit certain observations from your sample. You can simply do so in the beginning of your code and push play subsequently.. at time you might have to set `cache = FALSE` at the beginning so that all the code chungs are rerun.    
+Researchers often avoid referring to results intext etc. because you easily forget to change them when revising a manuscript. At the same it can make an article much more informative and easier to read, e.g., if you discuss a coefficient in the text you can directly show it in the section in which you discuss it. Inline code allows you to do just that. R Markdown allows you to that do so in a reproducible and automatized manner.
+
+# Figures
+
+## R base graphs
+Inserting figures can be slightly more complicated. Ideally, we would produce and insert them directly in the `.rmd` file. It's relatively simple to insert R base graphs as you can see in Figure \@ref(fig:fig-1).
+
+```{r fig-1, fig.align="center", fig.cap="Scatterplot of Speed and Distance", fig.pos="H", message=FALSE, warning=FALSE, paged.print=FALSE}
+plot(cars$speed, cars$dist)
+``` 
+
+But it turns out that it doesn't always work so well. 
+
+## ggplot2 graphs
+Same is true for ggplot2 as you can see in Figure \@ref(fig:fig-2).
+
+```{r fig-2, fig.align="center", fig.cap="Miles per gallon according to the weight", fig.pos="H", fig.width=6, fig.height=3, message=FALSE, warning=FALSE, paged.print=FALSE}
+mtcars$cyl <- as.factor(mtcars$cyl) # Convert cyl to factor
+library(ggplot2)
+ggplot(mtcars, aes(x=wt, y=mpg, shape=cyl)) + geom_point() +
+  labs(x="Weight (lb/1000)", y = "Miles/(US) gallon", 
+       shape="Number of \n Cylinders") + theme_classic()
+``` 
+
+## Plotly graphs
+Plotly is a popular graph engine that let's you also produce interactive graphs that you can embed in html webpages or documents (e.g., see [here](https://paulcbauer.shinyapps.io/visualizing-causal-scenarios/)). I am a big fan, however, right now there is no easy, automatic way to insert high resolution Plotly graphs into your R Markdown PDF. See Figure \@ref(fig:fig-3) below.      
+There seems to be a new engine for exporting graphs locally without relying on the plotly server --- which you wanna avoid for a properly reproducible PDF --- called orca (`?orca`). However, the [installation](https://github.com/plotly/orca#installation) is too challenging for the average user at the moment.
+
+```{r fig-3, fig.align="center", fig.cap="Scatterplot of Speed and Distance", fig.pos="H", message=FALSE, warning=FALSE}
+library(plotly)
+plot_ly(cars, type = "scatter", mode="markers",
+        x=~speed, 
+        y=~dist)
+```
+
+
+
+
+
+
+
+
+# Good practices
+Every researcher has his own optimized setup. Currently I would recommend the following:
+
+* Keep all files of your project (that matter for producing the PDF) in one folder without subfolders. You can zip and directly upload that folder to the [Harvard dataverse](https://dataverse.harvard.edu/)).
+* Make sure that filenames have a logic to them.
+    + Main file with text/code: "paper.rmd", "report.rmd" 
+    + Data files: "data_xxxxxx.*"
+    + Image files: "fig_xxxxxx.*"
+    + Tables files: "table_xxxx.*"
+    + etc.
+    + Ideally, your filenames will correspond to the names in the paper. For instance, Figure 1 in the paper may have a corresponding file called `fig_1_xxxxx.pdf`.
+* Use document the document outline in R studio (Ctrl + Shift + O) when you work with R Markdown.
+* Name rchunks according to what they do or produce:
+    + "`fig-...`" for chunks producing figures
+    + "`table-...`" for chunks producing tables
+    + "`model-...`" for chunks producing model estimates
+    + "`import-...`" for chunks importing data
+    + "`recoding-...`" for chunks in which data is recoded
+* Use "really" informative variable names:
+    + Q: What do you think does the variable *trstep* measure? It actually measures trust in the European parliament. 
+        + How could we call this variable instead? Yes, `trust.european.parliament` which is longer but will probably be understood by one of your descendants in 100 years.
+    + If your setup is truly reproducible you will probably re-use the variable names that you generate as variable names in the tables you produce. Hence, there is an incentive to use good names.
+* Use unique identifiers in the final document:
+    + e.g., name the models you estimate "M1", "M2" etc.
+    + These unique names should also appear in the published paper.
+    + Think of someone who wants to produce Figure 1/Model 1 in your paper but doesn't find it in your code...
+
+# Citation styles
+If your study needs to follow a particular citation style, you can set the corresponding style in the header of your `.rmd` document. To do so you have to download the corresponding `.csl` file.     
+
+In the present document we use the style of the American Sociological Association and set it in the preamble with `csl: american-sociological-association.csl`. However, you also need to download the respective `.csl` file from the following github page: https://github.com/citation-style-language/styles and copy it into your working directory for it to work.     
+
+The github directory contains a wide variety of citation style files depending on what discipline your work in.
+
+# Appendix 
+
+## All the code in the paper
+
+To simply attach all the code you used in the PDF file in the appendix see the R chunk in the underlying `.rmd` file:
+
+```{r, ref.label=knitr::all_labels(),echo=TRUE,eval=FALSE}
+```
+
+
+
+# References

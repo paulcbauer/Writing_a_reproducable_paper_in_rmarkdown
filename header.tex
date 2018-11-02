@@ -1,0 +1,82 @@
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{float}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{array}
+\usepackage{setspace}
+\usepackage{graphics}
+%\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{longtable}
+\usepackage{natbib}
+\usepackage{pdflscape}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{fullpage}
+\usepackage{multicol}
+\usepackage{dcolumn}
+\usepackage{lscape}
+\usepackage{array}
+\usepackage{color}
+\usepackage{setspace}
+
+\usepackage{cleveref}[2012/02/15]
+\usepackage{fullpage}
+\usepackage[charter]{mathdesign}
+\usepackage{bm}
+\usepackage{tabu}
+\usepackage{wrapfig}
+
+
+\crefformat{footnote}{#2\footnotemark[#1]#3}
+\usepackage{color}
+\usepackage{hyperref}
+
+\newenvironment{tightcenter}{%
+  \setlength\topsep{0pt}
+  \setlength\parskip{0pt}
+  \begin{center}
+}{%
+  \end{center}
+}
+
+%\setstretch{1.1}
+% Dutch style of paragraph formatting
+\parskip 5pt
+\makeatletter
+% Separation between lines
+\doublerulesep 1pt
+
+\usepackage[table]{xcolor}
+
+\definecolor{lightred}{rgb}{0.7,0,0}
+\definecolor{darkgreen}{rgb}{0,0.8,0}
+\definecolor{lightblue}{rgb}{0,0,0.7}
+
+\hypersetup{colorlinks,
+  linkcolor = lightred,
+  filecolor = lightred,
+  urlcolor = lightblue,
+  citecolor = lightred}
+
+% Spaces in bibliography
+\let\oldthebibliography=\thebibliography
+\let\endoldthebibliography=\endthebibliography
+\renewenvironment{thebibliography}[1]{%
+  \begin{oldthebibliography}{#1}%
+    \setlength{\parskip}{0ex}%
+    \setlength{\itemsep}{0.1ex}%
+  }%
+  {%
+  \end{oldthebibliography}%
+}
+
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\setlength{\parindent}{0pt} % no indentation
+
