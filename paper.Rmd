@@ -21,7 +21,7 @@ colorlinks: true
 abstract: \noindent\setstretch{1}The present paper provides a template for a reproducable scientific paper written in R Markdown. Below I outline some of the "tricks"/code (e.g., referencing tables, sections etc.) I had to figure out to produce this document. The underlying files which produce this document can be downloaded [here](https://drive.google.com/drive/folders/1zJP3cNPrHN-gj0rcmbHQgg-XA0hqDXdd?usp=sharing). I think I got pretty far but there is always room for improvement and more automatization, in parallel to the incredible developments in R and Rstudio (bookdown etc.). My last paper is almost entirely based on R Markdown [see @Bauer2018-hd and [reproduction files](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/DUMGLT)]. I intend to update this file when I discover more convenient code.\vspace{.8cm}
 bibliography: references.bib
 csl: american-sociological-association.csl
-output: 
+output:
   bookdown::pdf_document2:
     includes:
       in_header: header.tex
@@ -163,19 +163,19 @@ Producing good tables and referencing these tables within a R Markdown PDF has b
 
 ## stargazer(): Summary and regression tables
 
-Table \@ref(tab-summarystats) shows summary stats of your data. I normally use `stargazer()` [@hlavac2013stargazer] which offers extreme flexibility regarding table output (see `?stargazer`). 
+Table \@ref(tab1) shows summary stats of your data.^[To reference the table where you set the identifier in the stargazer function you only need to use the actual label, i.e., ´tab1´.] I normally use `stargazer()` [@hlavac2013stargazer] which offers extreme flexibility regarding table output (see `?stargazer`). 
 
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE, results="asis"}
 library(stargazer)
 stargazer(cars, 
           title = "Summary table with stargazer",
-          label="tab-summarystats", 
+          label="tab1", 
           table.placement = "H", 
           header=FALSE)
 ```
 
-Table \@ref(tab-regression) shows the output for a regression table. Make sure you name all your models and explicitly refer to model names (M1, M2 etc.) in the text.
+Table \@ref(tab2) shows the output for a regression table. Make sure you name all your models and explicitly refer to model names (M1, M2 etc.) in the text.
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE, results="asis"}
 library(stargazer)
@@ -184,7 +184,7 @@ model2 <- lm(speed ~ dist, data = cars)
 model3 <- lm(dist ~ speed, data = cars)
 stargazer(model1, model2, model3,
           title = "Regression table with stargazer",
-          label="tab-regression", 
+          label="tab2", 
           table.placement = "H", 
           column.labels = c("M1", "M2", "M3"),
           model.numbers = FALSE,
@@ -193,12 +193,13 @@ stargazer(model1, model2, model3,
 
 ## kable() and kable_styling()
 
-Another great function is `kable()` (`knitr` package) in combination with `kableExtra`. Table \@ref(tab:tab-kabletable) provides an example. Again you can modify so many things in both the `kable()` and the `kable_styling()` function. See [this overview](https://haozhu233.github.io/kableExtra/awesome_table_in_pdf.pdf) of all the kable stylings that are possible provided by the package author himself.
+Another great function is `kable()` (`knitr` package) in combination with `kableExtra`. Table \@ref(tab:tab3) provides an example.^[To reference the table produced by the chunk you need to add ´tab:´ to the chunk name, i.e., ´tab:tab3´.] Again you can modify so many things in both the `kable()` and the `kable_styling()` function. See [this overview](https://haozhu233.github.io/kableExtra/awesome_table_in_pdf.pdf) of all the kable stylings that are possible provided by the package author himself.
 
-```{r tab-kabletable, echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE, results="asis"}
+```{r tab3, echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE, results="asis"}
 library(knitr)
 library(kableExtra)
-kable(cars[1:10,], row.names = TRUE, caption = 'Table with kable() and kablestyling()', 
+kable(cars[1:10,], row.names = TRUE, 
+      caption = 'Table with kable() and kablestyling()', 
       format = "latex", booktabs = T) %>%
         kable_styling(full_width = T, 
                       latex_options = c("striped", 

@@ -298,14 +298,15 @@ Some arguments\ldots{}
   months. A fully reproducable setup will help you to trace back your
   own steps. Obviously, the same is true for other researchers who may
   want to understand your work and built on it. It may sound like a joke
-  but why not aim for reproducability in 500 years.
+  but why not aim for a document that can be used to reproduce your
+  findings in in 500 years.
 \item
   \textbf{Errors}: Manual steps in data analysis (e.g., manually
   copy/pasting values into a table etc.) may introduce errors. R
   Markdown allows you to \textbf{automatize} such steps and/or avoid
   them.
 \item
-  \textbf{Revisions}: Revising a paper takes much less time, if you have
+  \textbf{Revisions}: Revising a paper takes much less time if you have
   all the code you need in one place, i.e., one \texttt{.rmd} file. For
   instance, if you decide to exclude a subset of your data you simply
   need to insert one line of your code at the beginning and everything
@@ -579,8 +580,10 @@ for \texttt{stargazer} the label is contained in the function, for
 \subsection{stargazer(): Summary and regression
 tables}\label{stargazer-summary-and-regression-tables}
 
-Table \ref{tab-summarystats} shows summary stats of your data. I
-normally use \texttt{stargazer()} (Hlavac
+Table \ref{tab1} shows summary stats of your data.\footnote{To reference
+  the table where you set the identifier in the stargazer function you
+  only need to use the actual label, i.e., ´tab1´.} I normally use
+\texttt{stargazer()} (Hlavac
 \protect\hyperlink{ref-hlavac2013stargazer}{2013}) which offers extreme
 flexibility regarding table output (see \texttt{?stargazer}).
 
@@ -589,7 +592,7 @@ flexibility regarding table output (see \texttt{?stargazer}).
 \KeywordTok{library}\NormalTok{(stargazer)}
 \KeywordTok{stargazer}\NormalTok{(cars, }
           \DataTypeTok{title =} \StringTok{"Summary table with stargazer"}\NormalTok{,}
-          \DataTypeTok{label=}\StringTok{"tab-summarystats"}\NormalTok{, }
+          \DataTypeTok{label=}\StringTok{"tab1"}\NormalTok{, }
           \DataTypeTok{table.placement =} \StringTok{"H"}\NormalTok{, }
           \DataTypeTok{header=}\OtherTok{FALSE}\NormalTok{)}
 \end{Highlighting}
@@ -597,7 +600,7 @@ flexibility regarding table output (see \texttt{?stargazer}).
 
 \begin{table}[H] \centering 
   \caption{Summary table with stargazer} 
-  \label{tab-summarystats} 
+  \label{tab1} 
 \begin{tabular}{@{\extracolsep{5pt}}lccccccc} 
 \\[-1.8ex]\hline 
 \hline \\[-1.8ex] 
@@ -609,9 +612,9 @@ dist & 50 & 42.980 & 25.769 & 2 & 26 & 56 & 120 \\
 \end{tabular} 
 \end{table}
 
-Table \ref{tab-regression} shows the output for a regression table. Make
-sure you name all your models and explicitly refer to model names (M1,
-M2 etc.) in the text.
+Table \ref{tab2} shows the output for a regression table. Make sure you
+name all your models and explicitly refer to model names (M1, M2 etc.)
+in the text.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -621,7 +624,7 @@ M2 etc.) in the text.
 \NormalTok{model3 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(dist }\OperatorTok{~}\StringTok{ }\NormalTok{speed, }\DataTypeTok{data =}\NormalTok{ cars)}
 \KeywordTok{stargazer}\NormalTok{(model1, model2, model3,}
           \DataTypeTok{title =} \StringTok{"Regression table with stargazer"}\NormalTok{,}
-          \DataTypeTok{label=}\StringTok{"tab-regression"}\NormalTok{, }
+          \DataTypeTok{label=}\StringTok{"tab2"}\NormalTok{, }
           \DataTypeTok{table.placement =} \StringTok{"H"}\NormalTok{, }
           \DataTypeTok{column.labels =} \KeywordTok{c}\NormalTok{(}\StringTok{"M1"}\NormalTok{, }\StringTok{"M2"}\NormalTok{, }\StringTok{"M3"}\NormalTok{),}
           \DataTypeTok{model.numbers =} \OtherTok{FALSE}\NormalTok{,}
@@ -631,7 +634,7 @@ M2 etc.) in the text.
 
 \begin{table}[H] \centering 
   \caption{Regression table with stargazer} 
-  \label{tab-regression} 
+  \label{tab2} 
 \begin{tabular}{@{\extracolsep{5pt}}lccc} 
 \\[-1.8ex]\hline 
 \hline \\[-1.8ex] 
@@ -664,9 +667,11 @@ F Statistic (df = 1; 48) & 89.567$^{***}$ & 89.567$^{***}$ & 89.567$^{***}$ \\
 \subsection{kable() and kable\_styling()}\label{kable-and-kable_styling}
 
 Another great function is \texttt{kable()} (\texttt{knitr} package) in
-combination with \texttt{kableExtra}. Table \ref{tab:tab-kabletable}
-provides an example. Again you can modify so many things in both the
-\texttt{kable()} and the \texttt{kable\_styling()} function. See
+combination with \texttt{kableExtra}. Table \ref{tab:tab3} provides an
+example.\footnote{To reference the table produced by the chunk you need
+  to add ´tab:´ to the chunk name, i.e., ´tab:tab3´.} Again you can
+modify so many things in both the \texttt{kable()} and the
+\texttt{kable\_styling()} function. See
 \href{https://haozhu233.github.io/kableExtra/awesome_table_in_pdf.pdf}{this
 overview} of all the kable stylings that are possible provided by the
 package author himself.
@@ -675,7 +680,8 @@ package author himself.
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(knitr)}
 \KeywordTok{library}\NormalTok{(kableExtra)}
-\KeywordTok{kable}\NormalTok{(cars[}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{,], }\DataTypeTok{row.names =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{caption =} \StringTok{'Table with kable() and kablestyling()'}\NormalTok{, }
+\KeywordTok{kable}\NormalTok{(cars[}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{,], }\DataTypeTok{row.names =} \OtherTok{TRUE}\NormalTok{, }
+      \DataTypeTok{caption =} \StringTok{'Table with kable() and kablestyling()'}\NormalTok{, }
       \DataTypeTok{format =} \StringTok{"latex"}\NormalTok{, }\DataTypeTok{booktabs =}\NormalTok{ T) }\OperatorTok{%>%}
 \StringTok{        }\KeywordTok{kable_styling}\NormalTok{(}\DataTypeTok{full_width =}\NormalTok{ T, }
                       \DataTypeTok{latex_options =} \KeywordTok{c}\NormalTok{(}\StringTok{"striped"}\NormalTok{, }
@@ -689,7 +695,7 @@ package author himself.
 
 \begin{table}[H]
 
-\caption{\label{tab:tab-kabletable}Table with kable() and kablestyling()}
+\caption{\label{tab:tab3}Table with kable() and kablestyling()}
 \centering
 \resizebox{\linewidth}{!}{
 \fontsize{10}{12}\selectfont
@@ -965,7 +971,7 @@ see the R chunk in the underlying \texttt{.rmd} file:
 \KeywordTok{library}\NormalTok{(stargazer)}
 \KeywordTok{stargazer}\NormalTok{(cars, }
           \DataTypeTok{title =} \StringTok{"Summary table with stargazer"}\NormalTok{,}
-          \DataTypeTok{label=}\StringTok{"tab-summarystats"}\NormalTok{, }
+          \DataTypeTok{label=}\StringTok{"tab1"}\NormalTok{, }
           \DataTypeTok{table.placement =} \StringTok{"H"}\NormalTok{, }
           \DataTypeTok{header=}\OtherTok{FALSE}\NormalTok{)}
 \KeywordTok{library}\NormalTok{(stargazer)}
@@ -974,14 +980,15 @@ see the R chunk in the underlying \texttt{.rmd} file:
 \NormalTok{model3 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(dist }\OperatorTok{~}\StringTok{ }\NormalTok{speed, }\DataTypeTok{data =}\NormalTok{ cars)}
 \KeywordTok{stargazer}\NormalTok{(model1, model2, model3,}
           \DataTypeTok{title =} \StringTok{"Regression table with stargazer"}\NormalTok{,}
-          \DataTypeTok{label=}\StringTok{"tab-regression"}\NormalTok{, }
+          \DataTypeTok{label=}\StringTok{"tab2"}\NormalTok{, }
           \DataTypeTok{table.placement =} \StringTok{"H"}\NormalTok{, }
           \DataTypeTok{column.labels =} \KeywordTok{c}\NormalTok{(}\StringTok{"M1"}\NormalTok{, }\StringTok{"M2"}\NormalTok{, }\StringTok{"M3"}\NormalTok{),}
           \DataTypeTok{model.numbers =} \OtherTok{FALSE}\NormalTok{,}
           \DataTypeTok{header=}\OtherTok{FALSE}\NormalTok{)}
 \KeywordTok{library}\NormalTok{(knitr)}
 \KeywordTok{library}\NormalTok{(kableExtra)}
-\KeywordTok{kable}\NormalTok{(cars[}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{,], }\DataTypeTok{row.names =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{caption =} \StringTok{'Table with kable() and kablestyling()'}\NormalTok{, }
+\KeywordTok{kable}\NormalTok{(cars[}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{,], }\DataTypeTok{row.names =} \OtherTok{TRUE}\NormalTok{, }
+      \DataTypeTok{caption =} \StringTok{'Table with kable() and kablestyling()'}\NormalTok{, }
       \DataTypeTok{format =} \StringTok{"latex"}\NormalTok{, }\DataTypeTok{booktabs =}\NormalTok{ T) }\OperatorTok{%>%}
 \StringTok{        }\KeywordTok{kable_styling}\NormalTok{(}\DataTypeTok{full_width =}\NormalTok{ T, }
                       \DataTypeTok{latex_options =} \KeywordTok{c}\NormalTok{(}\StringTok{"striped"}\NormalTok{, }
