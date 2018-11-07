@@ -18,7 +18,7 @@ date: |
   |
 linestretch: 1.2
 colorlinks: true
-abstract: \noindent\setstretch{1}The present paper provides a template for a reproducable scientific paper written in R Markdown. Below I outline some of the "tricks"/code (e.g., referencing tables, sections etc.) I had to figure out to produce this document. The underlying files which produce this document can be downloaded [here](https://drive.google.com/drive/folders/1zJP3cNPrHN-gj0rcmbHQgg-XA0hqDXdd?usp=sharing). I think I got pretty far but there is always room for improvement and more automatization, in parallel to the incredible developments in R and Rstudio (bookdown etc.). My last paper is almost entirely based on R Markdown [see @Bauer2018-hd and [reproduction files](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/DUMGLT)]. I intend to update this file when I discover more convenient code.\vspace{.8cm}
+abstract: \noindent\setstretch{1}The present paper provides a template for a reproducible scientific paper written in R Markdown. Below I outline some of the "tricks"/code (e.g., referencing tables, sections etc.) I had to figure out to produce this document. The underlying files which produce this document can be downloaded [here](https://drive.google.com/drive/folders/1zJP3cNPrHN-gj0rcmbHQgg-XA0hqDXdd?usp=sharing). I think I got pretty far but there is always room for improvement and more automatization, in parallel to the incredible developments in R and Rstudio (bookdown etc.). I intend to update this file when I discover more convenient code.\vspace{.8cm}
 bibliography: references.bib
 csl: american-sociological-association.csl
 output:
@@ -63,7 +63,7 @@ rinline <- function(code){
 Some arguments...
 
 * **Access**: Research is normally funded by taxpayers (researchers are also taxpayers). Hence, it should be freely accessible to everyone without any barriers, e.g., without requiring commercial software. Importantly, researchers from developing countries are even more dependent on free access to knowledge [@Kirsop2005-ro].
-* **Reproducability**: Even if you have written a study and analyzed the data yourself you will forget what you did after a few months. A fully reproducable setup will help you to trace back your own steps. Obviously, the same is true for other researchers who may want to understand your work and built on it. It may sound like a joke but why not aim for a document that can be used to reproduce your findings in in 500 years. 
+* **Reproducability**: Even if you have written a study and analyzed the data yourself you will forget what you did after a few months. A fully reproducible setup will help you to trace back your own steps. Obviously, the same is true for other researchers who may want to understand your work and built on it. It may sound like a joke but why not aim for a document that can be used to reproduce your findings in in 500 years. 
 * **Errors**: Manual steps in data analysis (e.g., manually copy/pasting values into a table etc.) may introduce errors. R Markdown allows you to **automatize** such steps and/or avoid them.
 * **Revisions**: Revising a paper takes much less time if you have all the code you need in one place, i.e., one `.rmd` file. For instance, if you decide to exclude a subset of your data you simply need to insert one line of your code at the beginning and everything is rebuilt/re-estimated automatically.
 
@@ -210,8 +210,8 @@ kable(cars[1:10,], row.names = TRUE,
 
 # Inline code & results
 Reproduction reaches new heights when you work with inline code. For instance, you can automatize the display of certain coefficients within the text. An example is to include estimates, e.g., the coefficient of `dist` of the model we ran above. `r rinline("round(coef(model1)[2], 2)")` will insert the coefficient as follows: `r round(coef(model1)[2], 2)`. Or `r rinline("3 + 7")` will insert a `r 3 + 7` in the text.      
-Inline code/results that depend on earlier objects in your document will automatically be updated once you change those objects. For instance, imagine a reviewer asks you to omit certain observations from your sample. You can simply do so in the beginning of your code and push play subsequently.. at time you might have to set `cache = FALSE` at the beginning so that all the code chungs are rerun.    
-Researchers often avoid referring to results intext etc. because you easily forget to change them when revising a manuscript. At the same it can make an article much more informative and easier to read, e.g., if you discuss a coefficient in the text you can directly show it in the section in which you discuss it. Inline code allows you to do just that. R Markdown allows you to that do so in a reproducible and automatized manner.
+Inline code/results that depend on earlier objects in your document will automatically be updated once you change those objects. For instance, imagine a reviewer asks you to omit certain observations from your sample. You can simply do so in the beginning of your code and push play subsequently.. at time you might have to set `cache = FALSE` at the beginning so that all the code chunks are rerun.    
+Researchers often avoid referring to results in-text etc. because you easily forget to change them when revising a manuscript. At the same it can make an article much more informative and easier to read, e.g., if you discuss a coefficient in the text you can directly show it in the section in which you discuss it. Inline code allows you to do just that. R Markdown allows you to that do so in a reproducible and automatized manner.
 
 # Figures
 
@@ -285,7 +285,7 @@ If your study needs to follow a particular citation style, you can set the corre
 
 In the present document we use the style of the American Sociological Association and set it in the preamble with `csl: american-sociological-association.csl`. However, you also need to download the respective `.csl` file from the following github page: https://github.com/citation-style-language/styles and copy it into your working directory for it to work.     
 
-The github directory contains a wide variety of citation style files depending on what discipline your work in.
+The github directory contains a wide variety of citation style files depending on what discipline you work in.
 
 # Appendix 
 
