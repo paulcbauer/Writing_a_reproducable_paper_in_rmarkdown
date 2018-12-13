@@ -134,7 +134,7 @@ Mannheim Centre for European Social Research}
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{5 November, 2018\\[2\baselineskip]Feedback?\\
+    \date{13 December, 2018\\[2\baselineskip]Feedback?\\
 \href{mailto:mail@paulcbauer.eu}{\nolinkurl{mail@paulcbauer.eu}}\\}
 
 \usepackage[english]{babel}
@@ -799,32 +799,35 @@ Same is true for ggplot2 as you can see in Figure \ref{fig:fig-2}.
 Plotly is a popular graph engine that let's you also produce interactive
 graphs that you can embed in html webpages or documents (e.g., see
 \href{https://paulcbauer.shinyapps.io/visualizing-causal-scenarios/}{here}).
-I am a big fan, however, right now there is no easy, automatic way to
-insert high resolution Plotly graphs into your R Markdown PDF. See
-Figure \ref{fig:fig-3} below.\\
-There seems to be a new engine for exporting graphs locally without
-relying on the plotly server --- which you wanna avoid for a properly
-reproducible PDF --- called orca (\texttt{?orca}). However, the
-\href{https://github.com/plotly/orca\#installation}{installation} is too
-challenging for the average user at the moment.
+I am a big fan. For some time there was no easy, automatic way to insert
+high resolution Plotly graphs into your R Markdown PDF. However, this
+changed since Plotly provided Orca, a command line application for
+generating static images from Plotly graphs. The installation is a bit
+tricky (see here: \url{https://github.com/plotly/orca\#installation})
+but once you get it running you can produce beautiful graphs and include
+them in your RMarkdown PDF using some simple latex as shown below in
+Figure \ref{fig:fig-3}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(plotly)}
-\KeywordTok{plot_ly}\NormalTok{(cars, }\DataTypeTok{type =} \StringTok{"scatter"}\NormalTok{, }\DataTypeTok{mode=}\StringTok{"markers"}\NormalTok{,}
+\NormalTok{p <-}\StringTok{ }\KeywordTok{plot_ly}\NormalTok{(cars, }\DataTypeTok{type =} \StringTok{"scatter"}\NormalTok{, }\DataTypeTok{mode=}\StringTok{"markers"}\NormalTok{,}
         \DataTypeTok{x=}\OperatorTok{~}\NormalTok{speed, }
         \DataTypeTok{y=}\OperatorTok{~}\NormalTok{dist)}
+\KeywordTok{Sys.setenv}\NormalTok{(}\StringTok{'MAPBOX_TOKEN'}\NormalTok{ =}\StringTok{ '12423423'}\NormalTok{) }\CommentTok{# set arbitrary token}
+\KeywordTok{orca}\NormalTok{(p, }\StringTok{"plotly-plot.pdf"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{figure}[H]
-
-{\centering \includegraphics{paper_files/figure-latex/fig-3-1} 
-
-}
-
-\caption{Scatterplot of Speed and Distance}\label{fig:fig-3}
+\centering
+\caption{An plotly plot that was exported as PDF with orca before}\label{fig:fig-3}
+        \includegraphics[width=0.9\linewidth]{plotly-plot.pdf}
+\begin{flushleft}
+\end{flushleft}
 \end{figure}
+
+\vspace{-1.2cm}
 
 \section{Good practices}\label{good-practices}
 
@@ -1001,9 +1004,11 @@ see the R chunk in the underlying \texttt{.rmd} file:
 \StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x=}\StringTok{"Weight (lb/1000)"}\NormalTok{, }\DataTypeTok{y =} \StringTok{"Miles/(US) gallon"}\NormalTok{, }
        \DataTypeTok{shape=}\StringTok{"Number of }\CharTok{\textbackslash{}n}\StringTok{ Cylinders"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{theme_classic}\NormalTok{()}
 \KeywordTok{library}\NormalTok{(plotly)}
-\KeywordTok{plot_ly}\NormalTok{(cars, }\DataTypeTok{type =} \StringTok{"scatter"}\NormalTok{, }\DataTypeTok{mode=}\StringTok{"markers"}\NormalTok{,}
+\NormalTok{p <-}\StringTok{ }\KeywordTok{plot_ly}\NormalTok{(cars, }\DataTypeTok{type =} \StringTok{"scatter"}\NormalTok{, }\DataTypeTok{mode=}\StringTok{"markers"}\NormalTok{,}
         \DataTypeTok{x=}\OperatorTok{~}\NormalTok{speed, }
         \DataTypeTok{y=}\OperatorTok{~}\NormalTok{dist)}
+\KeywordTok{Sys.setenv}\NormalTok{(}\StringTok{'MAPBOX_TOKEN'}\NormalTok{ =}\StringTok{ '12423423'}\NormalTok{) }\CommentTok{# set arbitrary token}
+\KeywordTok{orca}\NormalTok{(p, }\StringTok{"plotly-plot.pdf"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 

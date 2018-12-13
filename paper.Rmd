@@ -236,18 +236,26 @@ ggplot(mtcars, aes(x=wt, y=mpg, shape=cyl)) + geom_point() +
 ``` 
 
 ## Plotly graphs
-Plotly is a popular graph engine that let's you also produce interactive graphs that you can embed in html webpages or documents (e.g., see [here](https://paulcbauer.shinyapps.io/visualizing-causal-scenarios/)). I am a big fan, however, right now there is no easy, automatic way to insert high resolution Plotly graphs into your R Markdown PDF. See Figure \@ref(fig:fig-3) below.      
-There seems to be a new engine for exporting graphs locally without relying on the plotly server --- which you wanna avoid for a properly reproducible PDF --- called orca (`?orca`). However, the [installation](https://github.com/plotly/orca#installation) is too challenging for the average user at the moment.
+Plotly is a popular graph engine that let's you also produce interactive graphs that you can embed in html webpages or documents (e.g., see [here](https://paulcbauer.shinyapps.io/visualizing-causal-scenarios/)). I am a big fan. For some time there was no easy, automatic way to insert high resolution Plotly graphs into your R Markdown PDF. However, this changed since Plotly provided Orca, a command line application for generating static images from Plotly graphs. The installation is a bit tricky (see here: https://github.com/plotly/orca#installation) but once you get it running you can produce beautiful graphs and include them in your RMarkdown PDF using some simple latex as shown below in Figure \@ref(fig:fig-3).
 
-```{r fig-3, fig.align="center", fig.cap="Scatterplot of Speed and Distance", fig.pos="H", message=FALSE, warning=FALSE}
+```{r fig-3, message=FALSE, warning=FALSE}
 library(plotly)
-plot_ly(cars, type = "scatter", mode="markers",
+p <- plot_ly(cars, type = "scatter", mode="markers",
         x=~speed, 
         y=~dist)
+Sys.setenv('MAPBOX_TOKEN' = '12423423') # set arbitrary token
+orca(p, "plotly-plot.pdf")
 ```
 
 
-
+\begin{figure}[H]
+\centering
+\caption{An plotly plot that was exported as PDF with orca before}\label{fig:fig-3}
+		\includegraphics[width=0.9\linewidth]{plotly-plot.pdf}
+\begin{flushleft}
+\end{flushleft}
+\end{figure}
+\vspace{-1.2cm}
 
 
 
