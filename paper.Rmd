@@ -63,7 +63,7 @@ rinline <- function(code){
 Some arguments...
 
 * **Access**: Research is normally funded by taxpayers (researchers are also taxpayers). Hence, it should be freely accessible to everyone without any barriers, e.g., without requiring commercial software. Importantly, researchers from developing countries are even more dependent on free access to knowledge [@Kirsop2005-ro].
-* **Reproducability**: Even if you have written a study and analyzed the data yourself you will forget what you did after a few months. A fully reproducible setup will help you to trace back your own steps. Obviously, the same is true for other researchers who may want to understand your work and built on it. It may sound like a joke but why not aim for a document that can be used to reproduce your findings in in 500 years. 
+* **Reproducability**: Even if you have written a study and analyzed the data yourself you will forget what you did after a few months. A fully reproducible setup will help you to trace back your own steps. Obviously, the same is true for other researchers who may want to understand your work and built on it. It may sound like a joke but why not aim for a document that can be used to reproduce your findings in 500 years. 
 * **Errors**: Manual steps in data analysis (e.g., manually copy/pasting values into a table etc.) may introduce errors. R Markdown allows you to **automatize** such steps and/or avoid them.
 * **Revisions**: Revising a paper takes much less time if you have all the code you need in one place, i.e., one `.rmd` file. For instance, if you decide to exclude a subset of your data you simply need to insert one line of your code at the beginning and everything is rebuilt/re-estimated automatically.
 
@@ -236,7 +236,7 @@ ggplot(mtcars, aes(x=wt, y=mpg, shape=cyl)) + geom_point() +
 ``` 
 
 ## Plotly graphs
-Plotly is a popular graph engine that let's you also produce interactive graphs that you can embed in html webpages or documents (e.g., see [here](https://paulcbauer.shinyapps.io/visualizing-causal-scenarios/)). I am a big fan. For some time there was no easy, automatic way to insert high resolution Plotly graphs into your R Markdown PDF. However, this changed since Plotly provided Orca, a command line application for generating static images from Plotly graphs. The installation is a bit tricky (see here: https://github.com/plotly/orca#installation) but once you get it running you can produce beautiful graphs and include them in your RMarkdown PDF using some simple latex as shown below in Figure \@ref(fig:fig-3).
+Plotly is a popular graph engine that let's you also produce interactive graphs that you can embed in html webpages or documents (e.g., see [here](https://paulcbauer.shinyapps.io/visualizing-causal-scenarios/)). I am a big fan. For some time there was no easy, automatic way to insert high resolution Plotly graphs into your R Markdown PDF. However, this changed since Plotly provided Orca, a command line application for generating static images from Plotly graphs. The installation is a bit tricky (see here: https://github.com/plotly/orca#installation) but once you get it running you can produce beautiful graphs and include them in your RMarkdown PDF using some simple latex as shown below in Figure \@ref(fig:fig-3). Potentially, in case you did not install the command line application this part may fail. If so simply exclude the chunk and the latex code. 
 
 ```{r fig-3, message=FALSE, warning=FALSE}
 library(plotly)
@@ -264,7 +264,7 @@ orca(p, "plotly-plot.pdf")
 # Good practices
 Every researcher has his own optimized setup. Currently I would recommend the following:
 
-* Keep all files of your project (that matter for producing the PDF) in one folder without subfolders. You can zip and directly upload that folder to the [Harvard dataverse](https://dataverse.harvard.edu/)).
+* Keep all files of your project (that matter for producing the PDF) in one folder without subfolders. You can zip and directly upload that folder to the [Harvard dataverse](https://dataverse.harvard.edu/).
 * Make sure that filenames have a logic to them.
     + Main file with text/code: "paper.rmd", "report.rmd" 
     + Data files: "data_xxxxxx.*"
@@ -272,7 +272,7 @@ Every researcher has his own optimized setup. Currently I would recommend the fo
     + Tables files: "table_xxxx.*"
     + etc.
     + Ideally, your filenames will correspond to the names in the paper. For instance, Figure 1 in the paper may have a corresponding file called `fig_1_xxxxx.pdf`.
-* Use document the document outline in R studio (Ctrl + Shift + O) when you work with R Markdown.
+* Use the document outline in R studio (Ctrl + Shift + O) when you work with R Markdown.
 * Name rchunks according to what they do or produce:
     + "`fig-...`" for chunks producing figures
     + "`table-...`" for chunks producing tables
@@ -281,7 +281,7 @@ Every researcher has his own optimized setup. Currently I would recommend the fo
     + "`recoding-...`" for chunks in which data is recoded
 * Use "really" informative variable names:
     + Q: What do you think does the variable *trstep* measure? It actually measures trust in the European parliament. 
-        + How could we call this variable instead? Yes, `trust.european.parliament` which is longer but will probably be understood by one of your descendants in 100 years.
+        + How could we call this variable instead? Yes, `trust.european.parliament` which is longer but will probably be understood by another researcher. 
     + If your setup is truly reproducible you will probably re-use the variable names that you generate as variable names in the tables you produce. Hence, there is an incentive to use good names.
 * Use unique identifiers in the final document:
     + e.g., name the models you estimate "M1", "M2" etc.

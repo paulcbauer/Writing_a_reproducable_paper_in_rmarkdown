@@ -134,7 +134,7 @@ Mannheim Centre for European Social Research}
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{13 December, 2018\\[2\baselineskip]Feedback?\\
+    \date{14 December, 2018\\[2\baselineskip]Feedback?\\
 \href{mailto:mail@paulcbauer.eu}{\nolinkurl{mail@paulcbauer.eu}}\\}
 
 \usepackage[english]{babel}
@@ -296,7 +296,7 @@ Some arguments\ldots{}
   own steps. Obviously, the same is true for other researchers who may
   want to understand your work and built on it. It may sound like a joke
   but why not aim for a document that can be used to reproduce your
-  findings in in 500 years.
+  findings in 500 years.
 \item
   \textbf{Errors}: Manual steps in data analysis (e.g., manually
   copy/pasting values into a table etc.) may introduce errors. R
@@ -806,7 +806,9 @@ generating static images from Plotly graphs. The installation is a bit
 tricky (see here: \url{https://github.com/plotly/orca\#installation})
 but once you get it running you can produce beautiful graphs and include
 them in your RMarkdown PDF using some simple latex as shown below in
-Figure \ref{fig:fig-3}.
+Figure \ref{fig:fig-3}. Potentially, in case you did not install the
+command line application this part may fail. If so simply exclude the
+chunk and the latex code.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -840,7 +842,7 @@ recommend the following:
   Keep all files of your project (that matter for producing the PDF) in
   one folder without subfolders. You can zip and directly upload that
   folder to the \href{https://dataverse.harvard.edu/}{Harvard
-  dataverse}).
+  dataverse}.
 \item
   Make sure that filenames have a logic to them.
 
@@ -862,8 +864,8 @@ recommend the following:
     called \texttt{fig\_1\_xxxxx.pdf}.
   \end{itemize}
 \item
-  Use document the document outline in R studio (Ctrl + Shift + O) when
-  you work with R Markdown.
+  Use the document outline in R studio (Ctrl + Shift + O) when you work
+  with R Markdown.
 \item
   Name rchunks according to what they do or produce:
 
@@ -894,7 +896,7 @@ recommend the following:
     \item
       How could we call this variable instead? Yes,
       \texttt{trust.european.parliament} which is longer but will
-      probably be understood by one of your descendants in 100 years.
+      probably be understood by another researcher.
     \end{itemize}
   \item
     If your setup is truly reproducible you will probably re-use the
