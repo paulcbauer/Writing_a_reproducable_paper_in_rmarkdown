@@ -268,6 +268,8 @@ Every researcher has his own optimized setup. Currently I would recommend the fo
 * Counting words
     + Use adobe acrobat (commerical software) to convert your file to a word file. Then open in word and delete all the parts that shouldn't go into the word count. The word count is displayed in the lower right.
     + Use an one of the online services to count your words (search for "pdf word count")
+* Appendix: You can change the numbering format for the appendix in the rmd file
+    + What is still not possible in this document is to automatically have separate reference sections for paper and appendix.
 
 # Citation styles
 If your study needs to follow a particular citation style, you can set the corresponding style in the header of your `.rmd` document. To do so you have to download the corresponding `.csl` file.     
@@ -326,6 +328,12 @@ Online Appendix
 \vspace{3cm}
 
 \clearpage
+\pagenumbering{arabic} 
+
+
+
+
+# Online appendix
 
 ## Attach R session info in appendix {#sec:rsessioninfo}
 
