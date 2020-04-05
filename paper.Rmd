@@ -34,9 +34,6 @@ link-citations: true
 documentclass: article
 geometry: margin=1in
 always_allow_html: yes
-header-includes:
-   - \usepackage{dcolumn}
-   - \usepackage{color}
 ---
 
 
@@ -118,9 +115,9 @@ To see how referencing works simply see the different examples for figures, tabl
 # Software versioning
 Software changes and gets updated, especially with an active developer community like that of R. Luckily you can always access [old versions of R](https://cran.r-project.org/bin/windows/base/old/) and old version of R packages in [the archive](https://cran.r-project.org/src/contrib/Archive/). In the archive you need to choose a particular package, e.g dplyr and search for the right version, e.g., `dplyr_0.2.tar.gz`. Then insert the path in the following function: `install.packages("https://....../dplyr_0.2.tar.gz", repos=NULL, type="source")`. Ideally, however, results will be simply reproducible in the most current R and package versions.
 
-I would recommend to use the command below and copy/paste the output into the first R chunk in your `paper.rmd` file. Normally we would do this when we compile/generate the paper for the last time. For more advanced tools see [packrat](https://rstudio.github.io/packrat/).
+I would recommend to use the command below and simply add it to the appendix as I did here in Appendix \@ref(sec:rsessioninfo). This will make sure you always provide the package versions that you used in the last compilation of your paper. For more advanced tools see [packrat](https://rstudio.github.io/packrat/).
 
-```{r fig-versioning, echo=TRUE}
+```{r fig-versioning, echo=TRUE, eval=FALSE}
 cat(paste("#", capture.output(sessionInfo()), "\n", collapse ="")) 
   # or use message() instead of cat()
 ```
@@ -235,29 +232,6 @@ ggplot(mtcars, aes(x=wt, y=mpg, shape=cyl)) + geom_point() +
        shape="Number of \n Cylinders") + theme_classic()
 ``` 
 
-## Plotly graphs
-Plotly is a popular graph engine that let's you also produce interactive graphs that you can embed in html webpages or documents (e.g., see [here](https://paulcbauer.shinyapps.io/visualizing-causal-scenarios/)). I am a big fan. For some time there was no easy, automatic way to insert high resolution Plotly graphs into your R Markdown PDF. However, this changed since Plotly provided Orca, a command line application for generating static images from Plotly graphs. The installation is a bit tricky (see here: https://github.com/plotly/orca#installation) but once you get it running you can produce beautiful graphs and include them in your RMarkdown PDF using some simple latex as shown below in Figure \@ref(fig:fig-3). Potentially, in case you did not install the command line application this part may fail. If so simply exclude the chunk and the latex code. 
-
-```{r fig-3, message=FALSE, warning=FALSE}
-library(plotly)
-p <- plot_ly(cars, type = "scatter", mode="markers",
-        x=~speed, 
-        y=~dist)
-Sys.setenv('MAPBOX_TOKEN' = '12423423') # set arbitrary token
-orca(p, "plotly-plot.pdf")
-```
-
-
-\begin{figure}[H]
-\centering
-\caption{An plotly plot that was exported as PDF with orca before}\label{fig:fig-3}
-		\includegraphics[width=0.9\linewidth]{plotly-plot.pdf}
-\begin{flushleft}
-\end{flushleft}
-\end{figure}
-\vspace{-1.2cm}
-
-
 
 
 
@@ -296,6 +270,14 @@ In the present document we use the style of the American Sociological Associatio
 The github directory contains a wide variety of citation style files depending on what discipline you work in.
 
 # Appendix 
+
+## Attach R session info in appendix {#sec:rsessioninfo}
+
+Since R and R packages are constantly evolving you might want to add the R session info that contains information on the R version as well as the packages that are loaded. 
+
+```{r echo=FALSE}
+print(sessionInfo(), local = FALSE)
+```
 
 ## All the code in the paper
 
