@@ -262,6 +262,13 @@ Every researcher has his own optimized setup. Currently I would recommend the fo
     + These unique names should also appear in the published paper.
     + Think of someone who wants to produce Figure 1/Model 1 in your paper but doesn't find it in your code...
 
+# Additional tricks for publishing
+* Make your script anonymous
+    + Simply put a `<!-- ... -->` around any identifying information, e.g., author names, title footnote etc.
+* Counting words
+    + Use adobe acrobat (commerical software) to convert your file to a word file. Then open in word and delete all the parts that shouldn't go into the word count. The word count is displayed in the lower right.
+    + Use an one of the online services to count your words (search for "pdf word count")
+
 # Citation styles
 If your study needs to follow a particular citation style, you can set the corresponding style in the header of your `.rmd` document. To do so you have to download the corresponding `.csl` file.     
 
@@ -269,7 +276,56 @@ In the present document we use the style of the American Sociological Associatio
 
 The github directory contains a wide variety of citation style files depending on what discipline you work in.
 
-# Appendix 
+
+
+# References
+
+\linespread{1}
+
+
+::: {#refs}
+
+:::
+
+
+
+
+
+
+\clearpage
+
+\appendix
+\addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
+
+
+
+
+\renewcommand{\thesection}{A}
+
+\setcounter{page}{1}
+
+\setcounter{table}{0}
+\renewcommand{\thetable}{A\arabic{table}}
+\renewcommand{\figurename}{Table}
+
+\setcounter{figure}{0}
+\renewcommand\thefigure{A\arabic{figure}}
+\renewcommand{\figurename}{Figure}
+
+
+\clearpage
+\pagenumbering{gobble}
+
+\vspace*{7cm}
+
+\begin{center}
+\begin{huge}
+Online Appendix
+\end{huge}
+\end{center}
+\vspace{3cm}
+
+\clearpage
 
 ## Attach R session info in appendix {#sec:rsessioninfo}
 
@@ -288,4 +344,3 @@ To simply attach all the code you used in the PDF file in the appendix see the R
 
 
 
-# References
