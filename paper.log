@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2020.2.29)  5 APR 2020 13:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2020.2.29)  5 APR 2020 13:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1504,18 +1504,18 @@ ne 601.
 Missing character: There is no * in font mdbchr8c!
 [13] [14] [15]
 LaTeX Font Info:    Font shape `T1/mdbch/m/n' will be
-(Font)              scaled to size 23.88496pt on input line 793.
+(Font)              scaled to size 23.88496pt on input line 795.
 [1
 
 
 ]
-Overfull \hbox (5.71321pt too wide) in paragraph at lines 835--835
+Overfull \hbox (5.71321pt too wide) in paragraph at lines 837--837
 []\T1/lmtt/m/n/12 ##  [5] digest_0.6.23     evaluate_0.14     tibble_2.1.3     
  lifecycle_0.2.0[] 
  []
 
 
-Overfull \hbox (11.89522pt too wide) in paragraph at lines 835--835
+Overfull \hbox (11.89522pt too wide) in paragraph at lines 837--837
 []\T1/lmtt/m/n/12 ## [33] magrittr_1.5      scales_1.1.0      htmltools_0.4.0  
  assertthat_0.2.1[] 
  []
@@ -1524,37 +1524,37 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.908 \end{Shaded}
+l.910 \end{Shaded}
                    [1
 
 ]
-Underfull \vbox (badness 10000) detected at line 908
+Underfull \vbox (badness 10000) detected at line 910
  []
 
 
-Underfull \vbox (badness 10000) detected at line 908
+Underfull \vbox (badness 10000) detected at line 910
  []
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.908 \end{Shaded}
+l.910 \end{Shaded}
                    [2]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 910.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 912.
 pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.910 \end{document}
+l.912 \end{document}
                      [3]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 910.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 912.
 (./paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 910.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 910.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 912.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 912.
 Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: C7539C44DBCE8A5B05F4850E10EBBEF3;3519.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 910.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 912.
  ) 
 Here is how much of TeX's memory you used:
  20186 strings out of 482938
@@ -1581,10 +1581,10 @@ r7y.pfb><c:/Users/Paul/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/ma
 thdesign/mdbch/md-chr8t.pfb><c:/Users/Paul/AppData/Roaming/TinyTeX/texmf-dist/f
 onts/type1/public/mathdesign/mdbch/md-chri7m.pfb><c:/Users/Paul/AppData/Roaming
 /TinyTeX/texmf-dist/fonts/type1/public/mathdesign/mdbch/md-chri8t.pfb>
-Output written on paper.pdf (19 pages, 203138 bytes).
+Output written on paper.pdf (19 pages, 203474 bytes).
 PDF statistics:
- 380 PDF objects out of 1000 (max. 8388607)
- 339 compressed objects within 4 object streams
+ 381 PDF objects out of 1000 (max. 8388607)
+ 340 compressed objects within 4 object streams
  85 named destinations out of 1000 (max. 500000)
  37051 words of extra memory for PDF output out of 42996 (max. 10000000)
 
