@@ -115,86 +115,6 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
-\usepackage[english]{babel}
-\usepackage[T1]{fontenc}
-\usepackage{float}
-\usepackage{lmodern}
-\usepackage{graphicx}
-\usepackage{url}
-\usepackage{array}
-\usepackage{setspace}
-\usepackage{graphics}
-%\usepackage{amssymb}
-\usepackage{amsmath}
-\usepackage{longtable}
-\usepackage{natbib}
-\usepackage{pdflscape}
-\usepackage{caption}
-\usepackage{subcaption}
-\usepackage{fullpage}
-\usepackage{multicol}
-\usepackage{dcolumn}
-\usepackage{lscape}
-\usepackage{array}
-\usepackage{color}
-\usepackage{setspace}
-
-\usepackage{cleveref}[2012/02/15]
-\usepackage{fullpage}
-\usepackage[charter]{mathdesign}
-\usepackage{bm}
-\usepackage{tabu}
-\usepackage{wrapfig}
-
-
-\crefformat{footnote}{#2\footnotemark[#1]#3}
-\usepackage{color}
-\usepackage{hyperref}
-
-\newenvironment{tightcenter}{%
-  \setlength\topsep{0pt}
-  \setlength\parskip{0pt}
-  \begin{center}
-}{%
-  \end{center}
-}
-
-%\setstretch{1.1}
-% Dutch style of paragraph formatting
-\parskip 5pt
-\makeatletter
-% Separation between lines
-\doublerulesep 1pt
-
-
-\definecolor{lightred}{rgb}{0.7,0,0}
-\definecolor{darkgreen}{rgb}{0,0.8,0}
-\definecolor{lightblue}{rgb}{0,0,0.7}
-
-\hypersetup{colorlinks,
-  linkcolor = lightred,
-  filecolor = lightred,
-  urlcolor = lightblue,
-  citecolor = lightred}
-
-% Spaces in bibliography
-\let\oldthebibliography=\thebibliography
-\let\endoldthebibliography=\endthebibliography
-\renewenvironment{thebibliography}[1]{%
-  \begin{oldthebibliography}{#1}%
-    \setlength{\parskip}{0ex}%
-    \setlength{\itemsep}{0.1ex}%
-  }%
-  {%
-  \end{oldthebibliography}%
-}
-
-\usepackage{array}
-\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-
-\setlength{\parindent}{0pt} % no indentation
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
@@ -214,7 +134,8 @@
 in R Markdown*\footnote{*Corresponding address: \href{mailto:mail@paulcbauer.eu}{\nolinkurl{mail@paulcbauer.eu}}. Acknowledgments: I am grateful to all those generous people that invest their time into open-source software.}\vspace{0.5cm}\\}
 \author{Paul C. Bauer\\
 Mannheim Centre for European Social Research}
-\date{5 April, 2020\\
+\date{First version: December 14, 2018\\
+This version: July 08, 2020\\
 ~\\
 Feedback?\\
 \href{mailto:mail@paulcbauer.eu}{\nolinkurl{mail@paulcbauer.eu}}\\}
@@ -287,7 +208,7 @@ I assume that you are using R on a day-to-day basis. You may have even started t
 
 \begin{itemize}
 \item
-  \ldots download the 5 input files I created --- \texttt{paper.rmd}, \texttt{header.tex}, \texttt{references.bib}, \texttt{data.csv} and \texttt{american-sociological-association.csl} --- from \href{https://drive.google.com/drive/folders/1zJP3cNPrHN-gj0rcmbHQgg-XA0hqDXdd?usp=sharing}{this folder}. Ignore the other files.
+  \ldots download the 5 input files I created --- \texttt{paper.rmd}, \texttt{references.bib}, \texttt{data.csv} and \texttt{american-sociological-association.csl} --- from \href{https://drive.google.com/drive/folders/1zJP3cNPrHN-gj0rcmbHQgg-XA0hqDXdd?usp=sharing}{this folder}. Ignore the other files.
 \item
   \ldots learn R and read about the other underlying components namely \href{https://en.wikipedia.org/wiki/Markdown}{Markdown}, \href{https://rmarkdown.rstudio.com/lesson-1.html}{R Markdown} and \href{https://en.wikipedia.org/wiki/LaTeX}{Latex}.
 \end{itemize}
@@ -301,8 +222,6 @@ All the files you need to produce the present PDF file are the input files\ldots
 \tightlist
 \item
   \ldots a \texttt{paper.rmd} file (the underlying R Markdown file).
-\item
-  \ldots a \texttt{header.tex} file (a tex file for document structure).
 \item
   \ldots a \texttt{references.bib} file (the bibliography).
 
@@ -508,21 +427,6 @@ F Statistic (df = 1; 48) & 89.567$^{***}$ & 89.567$^{***}$ & 89.567$^{***}$ \\
 \subsection{kable() and kable\_styling()}\label{kable-and-kable_styling}}
 
 Another great function is \texttt{kable()} (\texttt{knitr} package) in combination with \texttt{kableExtra}. Table \ref{tab:tab3} provides an example.\footnote{To reference the table produced by the chunk you need to add ´tab:´ to the chunk name, i.e., ´tab:tab3´.} Again you can modify so many things in both the \texttt{kable()} and the \texttt{kable\_styling()} function. See \href{https://haozhu233.github.io/kableExtra/awesome_table_in_pdf.pdf}{this overview} of all the kable stylings that are possible provided by the package author himself.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(knitr)}
-\KeywordTok{library}\NormalTok{(kableExtra)}
-\KeywordTok{kable}\NormalTok{(cars[}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{,], }\DataTypeTok{row.names =} \OtherTok{TRUE}\NormalTok{, }
-      \DataTypeTok{caption =} \StringTok{'Table with kable() and kablestyling()'}\NormalTok{, }
-      \DataTypeTok{format =} \StringTok{"latex"}\NormalTok{, }\DataTypeTok{booktabs =}\NormalTok{ T) }\OperatorTok{%>%}
-\StringTok{        }\KeywordTok{kable_styling}\NormalTok{(}\DataTypeTok{full_width =}\NormalTok{ T, }
-                      \DataTypeTok{latex_options =} \KeywordTok{c}\NormalTok{(}\StringTok{"striped"}\NormalTok{, }
-                                        \StringTok{"scale_down"}\NormalTok{,}
-                                        \StringTok{"HOLD_position"}\NormalTok{),}
-                      \DataTypeTok{font_size =} \DecValTok{10}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
 
 \begin{table}[H]
 
@@ -810,7 +714,7 @@ Online Appendix
 Since R and R packages are constantly evolving you might want to add the R session info that contains information on the R version as well as the packages that are loaded.
 
 \begin{verbatim}
-## R version 3.6.2 (2019-12-12)
+## R version 4.0.0 (2020-04-24)
 ## Platform: x86_64-w64-mingw32/x64 (64-bit)
 ## Running under: Windows 10 x64 (build 17763)
 ## 
@@ -820,20 +724,20 @@ Since R and R packages are constantly evolving you might want to add the R sessi
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] ggplot2_3.2.1    kableExtra_1.1.0 knitr_1.26       stargazer_5.2.2 
+## [1] ggplot2_3.3.0    kableExtra_1.1.0 knitr_1.29       stargazer_5.2.2 
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.3        pillar_1.4.3      compiler_3.6.2    tools_3.6.2      
-##  [5] digest_0.6.23     evaluate_0.14     tibble_2.1.3      lifecycle_0.2.0  
-##  [9] gtable_0.3.0      viridisLite_0.3.0 pkgconfig_2.0.3   rlang_0.4.5      
-## [13] rstudioapi_0.10   yaml_2.2.0        xfun_0.11         withr_2.1.2      
-## [17] dplyr_0.8.3       httr_1.4.1        stringr_1.4.0     xml2_1.2.2       
-## [21] vctrs_0.2.4       hms_0.5.2         tidyselect_0.2.5  webshot_0.5.2    
-## [25] grid_3.6.2        glue_1.3.2        R6_2.4.1          rmarkdown_2.0    
-## [29] bookdown_0.16     farver_2.0.1      purrr_0.3.3       readr_1.3.1      
-## [33] magrittr_1.5      scales_1.1.0      htmltools_0.4.0   assertthat_0.2.1 
-## [37] rvest_0.3.5       colorspace_1.4-1  labeling_0.3      stringi_1.4.3    
-## [41] lazyeval_0.2.2    munsell_0.5.0     crayon_1.3.4
+##  [1] Rcpp_1.0.4.6      pillar_1.4.4      compiler_4.0.0    tools_4.0.0      
+##  [5] digest_0.6.25     evaluate_0.14     lifecycle_0.2.0   tibble_3.0.1     
+##  [9] gtable_0.3.0      viridisLite_0.3.0 pkgconfig_2.0.3   rlang_0.4.6      
+## [13] rstudioapi_0.11   yaml_2.2.1        xfun_0.15         withr_2.2.0      
+## [17] stringr_1.4.0     httr_1.4.1        dplyr_1.0.0       xml2_1.3.2       
+## [21] generics_0.0.2    vctrs_0.3.1       hms_0.5.3         tidyselect_1.1.0 
+## [25] webshot_0.5.2     grid_4.0.0        glue_1.4.1        R6_2.4.1         
+## [29] rmarkdown_2.3     bookdown_0.19     farver_2.0.3      purrr_0.3.4      
+## [33] readr_1.3.1       magrittr_1.5      scales_1.1.1      ellipsis_0.3.1   
+## [37] htmltools_0.5.0   rvest_0.3.5       colorspace_1.4-1  labeling_0.3     
+## [41] stringi_1.4.6     munsell_0.5.0     crayon_1.3.4
 \end{verbatim}
 
 \hypertarget{all-the-code-in-the-paper}{%
