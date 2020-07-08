@@ -13,7 +13,7 @@ date: |
   | First version: December 14, 2018
   | This version: `r gsub("^0", "", format(Sys.time(), "%B %d, %Y"))`
   |
-  | Feedback? 
+  | Feedback? Errors?
   | mail@paulcbauer.eu
   |
 linestretch: 1.2
