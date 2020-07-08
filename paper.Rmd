@@ -15,7 +15,7 @@ date: |
   |
   | Feedback? Errors?
   | mail@paulcbauer.eu
-  |
+  | [Github repository](https://github.com/paulcbauer/Writing_a_reproducable_paper_in_rmarkdown/)
 linestretch: 1.2
 colorlinks: true
 abstract: \noindent\setstretch{1}The present paper provides a template for a reproducible scientific paper written in R Markdown. Below I outline some of the "tricks"/code (e.g., referencing tables, sections etc.) I had to figure out to produce this document. The underlying files which produce this document can be downloaded [here](https://drive.google.com/drive/folders/1zJP3cNPrHN-gj0rcmbHQgg-XA0hqDXdd?usp=sharing). I think I got pretty far but there is always room for improvement and more automatization, in parallel to the incredible developments in R and Rstudio (bookdown etc.). I intend to update this file when I discover more convenient code (you can follow any updates through the corresponding [github repo](https://github.com/paulcbauer/Writing_a_reproducable_paper_in_rmarkdown/)).\vspace{.8cm}
