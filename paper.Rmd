@@ -3,7 +3,7 @@ title: |
   |
   | 
   | \vspace{1cm}Writing a reproducible paper
-  | in R Markdown*^[*Corresponding address: mail@paulcbauer.eu. Acknowledgments: I am grateful to all those generous people that invest their time into open-source software.]\vspace{0.5cm}
+  | in R Markdown^[Corresponding address: mail@paulcbauer.eu. Acknowledgments: I am grateful to all those generous people that invest their time into open-source software.]\vspace{0.5cm}
   |
 author: |
   | Paul C. Bauer
