@@ -12,11 +12,10 @@ date: |
   |       
   | First version: December 14, 2018
   | This version: `r gsub("^0", "", format(Sys.time(), "%B %d, %Y"))`
+  | Download: https://osf.io/q395s
   |
-  | Feedback? Errors?
-  | mail@paulcbauer.eu
+  | Feedback? Errors? mail@paulcbauer.eu
   | [Github repository](https://github.com/paulcbauer/Writing_a_reproducable_paper_in_rmarkdown/)
-  |
   |
   | Tired of Latex?
   | Try [Pagedown](https://github.com/rstudio/pagedown) with our [new template](https://osf.io/k8jhx/)! :-)
