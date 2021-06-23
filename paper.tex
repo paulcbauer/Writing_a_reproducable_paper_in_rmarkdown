@@ -135,11 +135,15 @@ in R Markdown*\footnote{*Corresponding address: \href{mailto:mail@paulcbauer.eu}
 \author{Paul C. Bauer\\
 Mannheim Centre for European Social Research}
 \date{First version: December 14, 2018\\
-This version: July 08, 2020\\
+This version: June 23, 2021\\
 ~\\
 Feedback? Errors?\\
 \href{mailto:mail@paulcbauer.eu}{\nolinkurl{mail@paulcbauer.eu}}\\
-\href{https://github.com/paulcbauer/Writing_a_reproducable_paper_in_rmarkdown/}{Github repository}}
+\href{https://github.com/paulcbauer/Writing_a_reproducable_paper_in_rmarkdown/}{Github repository}\\
+~\\
+~\\
+Tired of Latex?\\
+Try \href{https://github.com/rstudio/pagedown}{Pagedown} with our \href{https://osf.io/k8jhx/}{new template}! :-)}
 
 \begin{document}
 \maketitle
@@ -439,16 +443,16 @@ Another great function is \texttt{kable()} (\texttt{knitr} package) in combinati
 \toprule
   & speed & dist\\
 \midrule
-\rowcolor{gray!6}  1 & 4 & 2\\
+\cellcolor{gray!6}{1} & \cellcolor{gray!6}{4} & \cellcolor{gray!6}{2}\\
 2 & 4 & 10\\
-\rowcolor{gray!6}  3 & 7 & 4\\
+\cellcolor{gray!6}{3} & \cellcolor{gray!6}{7} & \cellcolor{gray!6}{4}\\
 4 & 7 & 22\\
-\rowcolor{gray!6}  5 & 8 & 16\\
+\cellcolor{gray!6}{5} & \cellcolor{gray!6}{8} & \cellcolor{gray!6}{16}\\
 \addlinespace
 6 & 9 & 10\\
-\rowcolor{gray!6}  7 & 10 & 18\\
+\cellcolor{gray!6}{7} & \cellcolor{gray!6}{10} & \cellcolor{gray!6}{18}\\
 8 & 10 & 26\\
-\rowcolor{gray!6}  9 & 10 & 34\\
+\cellcolor{gray!6}{9} & \cellcolor{gray!6}{10} & \cellcolor{gray!6}{34}\\
 10 & 11 & 17\\
 \bottomrule
 \end{tabu}}
@@ -555,6 +559,8 @@ Every researcher has his own optimized setup. Currently I would recommend the fo
   \item
     ``\texttt{recoding-...}'' for chunks in which data is recoded
   \end{itemize}
+\item
+  Ideally give chunks the labels of the figures/tables in the final publication, e.g., ``\texttt{fig-1}'' is the name of the chunk that produces Figure 1 in the final paper.
 \item
   Use ``really'' informative variable names:
 
@@ -715,7 +721,7 @@ Online Appendix
 Since R and R packages are constantly evolving you might want to add the R session info that contains information on the R version as well as the packages that are loaded.
 
 \begin{verbatim}
-## R version 4.0.0 (2020-04-24)
+## R version 4.1.0 (2021-05-18)
 ## Platform: x86_64-w64-mingw32/x64 (64-bit)
 ## Running under: Windows 10 x64 (build 17763)
 ## 
@@ -725,20 +731,21 @@ Since R and R packages are constantly evolving you might want to add the R sessi
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] ggplot2_3.3.0    kableExtra_1.1.0 knitr_1.29       stargazer_5.2.2 
+## [1] ggplot2_3.3.4    kableExtra_1.3.4 knitr_1.33       stargazer_5.2.2 
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.4.6      pillar_1.4.4      compiler_4.0.0    tools_4.0.0      
-##  [5] digest_0.6.25     evaluate_0.14     lifecycle_0.2.0   tibble_3.0.1     
-##  [9] gtable_0.3.0      viridisLite_0.3.0 pkgconfig_2.0.3   rlang_0.4.6      
-## [13] rstudioapi_0.11   yaml_2.2.1        xfun_0.15         withr_2.2.0      
-## [17] stringr_1.4.0     httr_1.4.1        dplyr_1.0.0       xml2_1.3.2       
-## [21] generics_0.0.2    vctrs_0.3.1       hms_0.5.3         tidyselect_1.1.0 
-## [25] webshot_0.5.2     grid_4.0.0        glue_1.4.1        R6_2.4.1         
-## [29] rmarkdown_2.3     bookdown_0.19     farver_2.0.3      purrr_0.3.4      
-## [33] readr_1.3.1       magrittr_1.5      scales_1.1.1      ellipsis_0.3.1   
-## [37] htmltools_0.5.0   rvest_0.3.5       colorspace_1.4-1  labeling_0.3     
-## [41] stringi_1.4.6     munsell_0.5.0     crayon_1.3.4
+##  [1] compiler_4.1.0    pillar_1.6.1      tools_4.1.0       digest_0.6.27    
+##  [5] evaluate_0.14     lifecycle_1.0.0   tibble_3.1.2      gtable_0.3.0     
+##  [9] viridisLite_0.4.0 pkgconfig_2.0.3   rlang_0.4.11      DBI_1.1.1        
+## [13] rstudioapi_0.13   yaml_2.2.1        xfun_0.24         withr_2.4.2      
+## [17] dplyr_1.0.6       httr_1.4.2        stringr_1.4.0     xml2_1.3.2       
+## [21] generics_0.1.0    vctrs_0.3.8       systemfonts_1.0.2 tidyselect_1.1.1 
+## [25] webshot_0.5.2     grid_4.1.0        svglite_2.0.0     glue_1.4.2       
+## [29] R6_2.5.0          fansi_0.5.0       rmarkdown_2.9     bookdown_0.22    
+## [33] farver_2.1.0      purrr_0.3.4       magrittr_2.0.1    scales_1.1.1     
+## [37] htmltools_0.5.1.1 ellipsis_0.3.2    assertthat_0.2.1  rvest_1.0.0      
+## [41] colorspace_2.0-1  labeling_0.4.2    utf8_1.2.1        stringi_1.6.1    
+## [45] munsell_0.5.0     crayon_1.4.1
 \end{verbatim}
 
 \hypertarget{all-the-code-in-the-paper}{%
