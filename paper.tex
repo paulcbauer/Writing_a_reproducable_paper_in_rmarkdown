@@ -1,16 +1,16 @@
 % Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
-\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
 %
 \documentclass[
   12pt,
 ]{article}
+\usepackage{amsmath,amssymb}
 \usepackage{lmodern}
 \usepackage{setspace}
-\usepackage{amssymb,amsmath}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -38,16 +38,6 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-\hypersetup{
-  colorlinks=true,
-  linkcolor=Maroon,
-  filecolor=Maroon,
-  citecolor=Blue,
-  urlcolor=Blue,
-  pdfcreator={LaTeX via pandoc}}
-\urlstyle{same} % disable monospaced font for URLs
 \usepackage[margin=1in]{geometry}
 \usepackage{color}
 \usepackage{fancyvrb}
@@ -89,7 +79,8 @@
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\usepackage{longtable,booktabs}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
 \makeatletter
@@ -98,7 +89,7 @@
 % Allow footnotes in longtable head/foot
 \IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
 \makesavenoteenv{longtable}
-\usepackage{graphicx,grffile}
+\usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
@@ -115,6 +106,29 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
@@ -129,25 +143,41 @@
 \usepackage[normalem]{ulem}
 \usepackage{makecell}
 \usepackage{xcolor}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdfauthor={Paul Bauer, Mannheim Centre for European Social Research; Camille Landesvatter, Mannheim Centre for European Social Research},
+  colorlinks=true,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
 
-\title{\vspace{1cm}Writing a reproducible paper\\
-in R Markdown\footnote{Corresponding address: \href{mailto:mail@paulcbauer.eu}{\nolinkurl{mail@paulcbauer.eu}}. Acknowledgments: I am grateful to all those generous people that invest their time into open-source software.}\vspace{0.5cm}\\}
-\author{Paul C. Bauer\\
-Mannheim Centre for European Social Research}
-\date{First version: December 14, 2018\\
-This version: June 23, 2021\\
+\title{\hfill\break
+\hfill\break
+\vspace{1cm}Writing a reproducible paper\\
+in R Markdown\footnote{Corresponding address: \href{mailto:mail@paulcbauer.de}{\nolinkurl{mail@paulcbauer.de}}. Acknowledgments: We are grateful to all those generous people that invest their time into open-source software.}\vspace{0.5cm}\\}
+\author{Paul Bauer, Mannheim Centre for European Social Research \and Camille Landesvatter, Mannheim Centre for European Social Research}
+\date{\hfill\break
+First version: December 14, 2018\\
+This version: March 08, 2023\\
 Download: \url{https://osf.io/q395s}\\
-~\\
+\strut \\
 Feedback? Errors? \href{mailto:mail@paulcbauer.eu}{\nolinkurl{mail@paulcbauer.eu}}\\
 \href{https://github.com/paulcbauer/Writing_a_reproducable_paper_in_rmarkdown/}{Github repository}\\
-~\\
+\strut \\
 Tired of Latex?\\
 Try \href{https://github.com/rstudio/pagedown}{Pagedown} with our \href{https://osf.io/k8jhx/}{new template}! :-)}
 
 \begin{document}
 \maketitle
 \begin{abstract}
-\noindent\setstretch{1}The present paper provides a template for a reproducible scientific paper written in R Markdown. Below I outline some of the ``tricks''/code (e.g., referencing tables, sections etc.) I had to figure out to produce this document. The underlying files which produce this document can be downloaded \href{https://drive.google.com/drive/folders/1zJP3cNPrHN-gj0rcmbHQgg-XA0hqDXdd?usp=sharing}{here}. I think I got pretty far but there is always room for improvement and more automatization, in parallel to the incredible developments in R and Rstudio (bookdown etc.). I intend to update this file when I discover more convenient code (you can follow any updates through the corresponding \href{https://github.com/paulcbauer/Writing_a_reproducable_paper_in_rmarkdown/}{github repo}).\vspace{.8cm}
+\noindent\setstretch{1}The present paper provides a template for a reproducible scientific paper written in R Markdown. Below we outline some of the ``tricks''/code (e.g., referencing tables, sections etc.) we had to figure out to produce this document. The underlying files which produce this document can be downloaded \href{https://drive.google.com/drive/folders/1zJP3cNPrHN-gj0rcmbHQgg-XA0hqDXdd?usp=sharing}{here}. We think we got pretty far but there is always room for improvement and more automatization, in parallel to the incredible developments in R and Rstudio (bookdown etc.). We intend to update this file when we discover more convenient code (you can follow any updates through the corresponding \href{https://github.com/paulcbauer/Writing_a_reproducable_paper_in_rmarkdown/}{github repo}).\vspace{.8cm}
 \end{abstract}
 
 \setstretch{1.2}
@@ -167,7 +197,7 @@ Some arguments\ldots{}
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Access}: Research is normally funded by taxpayers (researchers are also taxpayers). Hence, it should be freely accessible to everyone without any barriers, e.g., without requiring commercial software. Importantly, researchers from developing countries are even more dependent on free access to knowledge (Kirsop and Chan \protect\hyperlink{ref-Kirsop2005-ro}{2005}).
+  \textbf{Access}: Research is normally funded by taxpayers (researchers are also taxpayers). Hence, it should be freely accessible to everyone without any barriers, e.g., without requiring commercial software. Importantly, researchers from developing countries are even more dependent on free access to knowledge (\protect\hyperlink{ref-Kirsop2005-ro}{Kirsop and Chan 2005}).
 \item
   \textbf{Reproducability}: Even if you have written a study and analyzed the data yourself you will forget what you did after a few months. A fully reproducible setup will help you to trace back your own steps. Obviously, the same is true for other researchers who may want to understand your work and built on it. It may sound like a joke but why not aim for a document that can be used to reproduce your findings in 500 years.
 \item
@@ -179,32 +209,32 @@ Some arguments\ldots{}
 \hypertarget{prerequesites}{%
 \section{Prerequesites}\label{prerequesites}}
 
-I assume that you are using R on a day-to-day basis. You may have even started to work a little in R Markdown but you don't write your complete paper in R Markdown. If you don't know what R Markdown is watch \href{https://vimeo.com/178485416}{this short video}. Then\ldots{}
+We assume that you are using R on a day-to-day basis. You may have even started to work a little in R Markdown but you don't write your complete paper in R Markdown. If you don't know what R Markdown is watch \href{https://vimeo.com/178485416}{this short video}. Then\ldots{}
 
 \begin{itemize}
 \tightlist
 \item
-  \ldots install \href{https://www.r-project.org/}{R} and \href{https://www.rstudio.com/}{Rstudio} (most recent versions) (R Core Team \protect\hyperlink{ref-R2017}{2017}; RStudio Team \protect\hyperlink{ref-Rstudio2015}{2015}).
+  \ldots install \href{https://www.r-project.org/}{R} and \href{https://www.rstudio.com/}{Rstudio} (most recent versions) (\protect\hyperlink{ref-R2017}{R Core Team 2017}; \protect\hyperlink{ref-Rstudio2015}{RStudio Team 2015}).
 \item
-  \ldots install \href{https://yihui.name/tinytex/}{tinytex}, a lightweight version of Tex Live (Allaire et al. \protect\hyperlink{ref-markdown2017}{2017}; Xie \protect\hyperlink{ref-tinytex}{2018}\protect\hyperlink{ref-tinytex}{b}).
+  \ldots install \href{https://yihui.name/tinytex/}{tinytex}, a lightweight version of Tex Live (\protect\hyperlink{ref-markdown2017}{Allaire et al. 2017}; \protect\hyperlink{ref-tinytex}{Xie 2018b}).
 \end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{install.packages}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{'tinytex'}\NormalTok{, }\StringTok{'rmarkdown'}\NormalTok{))}
-\NormalTok{tinytex}\OperatorTok{::}\KeywordTok{install_tinytex}\NormalTok{()}
+\FunctionTok{install.packages}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}tinytex\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}rmarkdown\textquotesingle{}}\NormalTok{))}
+\NormalTok{tinytex}\SpecialCharTok{::}\FunctionTok{install\_tinytex}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{itemize}
 \tightlist
 \item
-  \ldots install the packages below using the code below (Sievert et al. \protect\hyperlink{ref-plotly}{2017}; Xie \protect\hyperlink{ref-knitr3}{2014}, \protect\hyperlink{ref-knitr2}{2015}, \protect\hyperlink{ref-bookdown2}{2016}, \protect\hyperlink{ref-bookdown1}{2017}, \protect\hyperlink{ref-knitr1}{2018}\protect\hyperlink{ref-knitr1}{a}; Zhu \protect\hyperlink{ref-kableextra}{2017}).
+  \ldots install the packages below using the code below (\protect\hyperlink{ref-plotly}{Sievert et al. 2017}; \protect\hyperlink{ref-knitr3}{Xie 2014}, \protect\hyperlink{ref-knitr2}{2015}, \protect\hyperlink{ref-bookdown2}{2016}, \protect\hyperlink{ref-bookdown1}{2017}, \protect\hyperlink{ref-knitr1}{2018a}; \protect\hyperlink{ref-kableextra}{Zhu 2017}).
 \end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{install.packages}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"rmarkdown"}\NormalTok{, }\StringTok{"knitr"}\NormalTok{, }\StringTok{"kableExtra"}\NormalTok{,}
+\FunctionTok{install.packages}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"rmarkdown"}\NormalTok{, }\StringTok{"knitr"}\NormalTok{, }\StringTok{"kableExtra"}\NormalTok{,}
                    \StringTok{"stargazer"}\NormalTok{, }\StringTok{"plotly"}\NormalTok{, }\StringTok{"knitr"}\NormalTok{,}
                    \StringTok{"bookdown"}\NormalTok{))}
 \end{Highlighting}
@@ -212,7 +242,7 @@ I assume that you are using R on a day-to-day basis. You may have even started t
 
 \begin{itemize}
 \item
-  \ldots download the 5 input files I created --- \texttt{paper.rmd}, \texttt{references.bib}, \texttt{data.csv} and \texttt{american-sociological-association.csl} --- from \href{https://drive.google.com/drive/folders/1zJP3cNPrHN-gj0rcmbHQgg-XA0hqDXdd?usp=sharing}{this folder}. Ignore the other files.
+  \ldots download the 5 input files we created --- \texttt{paper.rmd}, \texttt{references.bib}, \texttt{data.csv} and \texttt{american-sociological-association.csl} --- from \href{https://drive.google.com/drive/folders/1zJP3cNPrHN-gj0rcmbHQgg-XA0hqDXdd?usp=sharing}{this folder}. Ignore the other files.
 \item
   \ldots learn R and read about the other underlying components namely \href{https://en.wikipedia.org/wiki/Markdown}{Markdown}, \href{https://rmarkdown.rstudio.com/lesson-1.html}{R Markdown} and \href{https://en.wikipedia.org/wiki/LaTeX}{Latex}.
 \end{itemize}
@@ -232,7 +262,7 @@ All the files you need to produce the present PDF file are the input files\ldots
   \begin{itemize}
   \tightlist
   \item
-    I use paperpile to manage my references and export the \texttt{.bib} file into the folder that contains my \texttt{.rmd} file.
+    We use paperpile to manage my references and export the \texttt{.bib} file into the folder that contains my \texttt{.rmd} file.
   \end{itemize}
 \item
   \ldots a \texttt{data.csv} file (some raw data).
@@ -261,19 +291,19 @@ Below we always display the R code in the chunks that produce the output. In you
 \hypertarget{referencing-within-your-document}{%
 \section{Referencing within your document}\label{referencing-within-your-document}}
 
-To see how referencing works simply see the different examples for figures, tables and sections below. For instance in Section \ref{sec:tables} you can find different ways of referencing tables. The code of the underlying \texttt{paper.rmd} will show you how I referenced Section \ref{sec:tables} right here namely with `\texttt{Section\ \textbackslash{}@ref(sec:tables)}'.
+To see how referencing works simply see the different examples for figures, tables and sections below. For instance in Section \ref{sec:tables} you can find different ways of referencing tables. The code of the underlying \texttt{paper.rmd} will show you how we referenced Section \ref{sec:tables} right here namely with `\texttt{Section\ \textbackslash{}@ref(sec:tables)}'.
 
 \hypertarget{software-versioning}{%
 \section{Software versioning}\label{software-versioning}}
 
 Software changes and gets updated, especially with an active developer community like that of R. Luckily you can always access \href{https://cran.r-project.org/bin/windows/base/old/}{old versions of R} and old version of R packages in \href{https://cran.r-project.org/src/contrib/Archive/}{the archive}. In the archive you need to choose a particular package, e.g dplyr and search for the right version, e.g., \texttt{dplyr\_0.2.tar.gz}. Then insert the path in the following function: \texttt{install.packages("https://....../dplyr\_0.2.tar.gz",\ repos=NULL,\ type="source")}. Ideally, however, results will be simply reproducible in the most current R and package versions.
 
-I would recommend to use the command below and simply add it to the appendix as I did here in Appendix \ref{sec:rsessioninfo}. This will make sure you always provide the package versions that you used in the last compilation of your paper. For more advanced tools see \href{https://rstudio.github.io/packrat/}{packrat}.
+We would recommend to use the command below and simply add it to the appendix as we did here in Appendix \ref{sec:rsessioninfo}. This will make sure you always provide the package versions that you used in the last compilation of your paper. For more advanced tools see \href{https://rstudio.github.io/packrat/}{packrat}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{cat}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"#"}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(}\KeywordTok{sessionInfo}\NormalTok{()), }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\DataTypeTok{collapse =}\StringTok{""}\NormalTok{)) }
-  \CommentTok{# or use message() instead of cat()}
+\FunctionTok{cat}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"\#"}\NormalTok{, }\FunctionTok{capture.output}\NormalTok{(}\FunctionTok{sessionInfo}\NormalTok{()), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\AttributeTok{collapse =}\StringTok{""}\NormalTok{)) }
+  \CommentTok{\# or use message() instead of cat()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -285,8 +315,8 @@ I would recommend to use the command below and simply add it to the appendix as 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{data <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"data.csv"}\NormalTok{)}
-\KeywordTok{head}\NormalTok{(data)}
+\NormalTok{data }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"data.csv"}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(data)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -307,7 +337,7 @@ Applying the function \texttt{dput()} to an object gives you the code needed to 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{dput}\NormalTok{(data)}
+\FunctionTok{dput}\NormalTok{(data)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -328,17 +358,17 @@ You can then insert the dput output in your \texttt{.rmd} as below.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{data <-}\StringTok{ }\KeywordTok{structure}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\DataTypeTok{X =} \DecValTok{1}\OperatorTok{:}\DecValTok{50}\NormalTok{, }\DataTypeTok{speed =} \KeywordTok{c}\NormalTok{(4L, 4L, 7L, 7L, 8L, 9L, 10L, }
+\NormalTok{data }\OtherTok{\textless{}{-}} \FunctionTok{structure}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\AttributeTok{X =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{50}\NormalTok{, }\AttributeTok{speed =} \FunctionTok{c}\NormalTok{(4L, 4L, 7L, 7L, 8L, 9L, 10L, }
 \NormalTok{10L, 10L, 11L, 11L, 12L, 12L, 12L, 12L, 13L, 13L, 13L, 13L, 14L, }
 \NormalTok{14L, 14L, 14L, 15L, 15L, 15L, 16L, 16L, 17L, 17L, 17L, 18L, 18L, }
 \NormalTok{18L, 18L, 19L, 19L, 19L, 20L, 20L, 20L, 20L, 20L, 22L, 23L, 24L, }
-\NormalTok{24L, 24L, 24L, 25L), }\DataTypeTok{dist =} \KeywordTok{c}\NormalTok{(2L, 10L, 4L, 22L, 16L, 10L, 18L, }
+\NormalTok{24L, 24L, 24L, 25L), }\AttributeTok{dist =} \FunctionTok{c}\NormalTok{(2L, 10L, 4L, 22L, 16L, 10L, 18L, }
 \NormalTok{26L, 34L, 17L, 28L, 14L, 20L, 24L, 28L, 26L, 34L, 34L, 46L, 26L, }
 \NormalTok{36L, 60L, 80L, 20L, 26L, 54L, 32L, 40L, 32L, 40L, 50L, 42L, 56L, }
 \NormalTok{76L, 84L, 36L, 46L, 68L, 32L, 48L, 52L, 56L, 64L, 66L, 54L, 70L, }
 \NormalTok{92L, 93L, 120L, 85L)), }
-\DataTypeTok{class =} \StringTok{"data.frame"}\NormalTok{, }\DataTypeTok{row.names =} \KeywordTok{c}\NormalTok{(}\OtherTok{NA}\NormalTok{, }
-\OperatorTok{-}\NormalTok{50L))}
+\AttributeTok{class =} \StringTok{"data.frame"}\NormalTok{, }\AttributeTok{row.names =} \FunctionTok{c}\NormalTok{(}\ConstantTok{NA}\NormalTok{, }
+\SpecialCharTok{{-}}\NormalTok{50L))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -350,29 +380,29 @@ Producing good tables and referencing these tables within a R Markdown PDF has b
 \hypertarget{stargazer-summary-and-regression-tables}{%
 \subsection{stargazer(): Summary and regression tables}\label{stargazer-summary-and-regression-tables}}
 
-Table \ref{tab1} shows summary stats of your data.\footnote{To reference the table where you set the identifier in the stargazer function you only need to use the actual label, i.e., ´tab1´.} I normally use \texttt{stargazer()} (Hlavac \protect\hyperlink{ref-hlavac2013stargazer}{2013}) which offers extreme flexibility regarding table output (see \texttt{?stargazer}).
+Table \ref{tab1} shows summary stats of your data.\footnote{To reference the table where you set the identifier in the stargazer function you only need to use the actual label, i.e., ´tab1´.} We normally use \texttt{stargazer()} (\protect\hyperlink{ref-hlavac2013stargazer}{Hlavac 2013}) which offers extreme flexibility regarding table output (see \texttt{?stargazer}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(stargazer)}
-\KeywordTok{stargazer}\NormalTok{(cars, }
-          \DataTypeTok{title =} \StringTok{"Summary table with stargazer"}\NormalTok{,}
-          \DataTypeTok{label=}\StringTok{"tab1"}\NormalTok{, }
-          \DataTypeTok{table.placement =} \StringTok{"H"}\NormalTok{, }
-          \DataTypeTok{header=}\OtherTok{FALSE}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(stargazer)}
+\FunctionTok{stargazer}\NormalTok{(cars, }
+          \AttributeTok{title =} \StringTok{"Summary table with stargazer"}\NormalTok{,}
+          \AttributeTok{label=}\StringTok{"tab1"}\NormalTok{, }
+          \AttributeTok{table.placement =} \StringTok{"H"}\NormalTok{, }
+          \AttributeTok{header=}\ConstantTok{FALSE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{table}[H] \centering 
   \caption{Summary table with stargazer} 
   \label{tab1} 
-\begin{tabular}{@{\extracolsep{5pt}}lccccccc} 
+\begin{tabular}{@{\extracolsep{5pt}}lccccc} 
 \\[-1.8ex]\hline 
 \hline \\[-1.8ex] 
-Statistic & \multicolumn{1}{c}{N} & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{St. Dev.} & \multicolumn{1}{c}{Min} & \multicolumn{1}{c}{Pctl(25)} & \multicolumn{1}{c}{Pctl(75)} & \multicolumn{1}{c}{Max} \\ 
+Statistic & \multicolumn{1}{c}{N} & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{St. Dev.} & \multicolumn{1}{c}{Min} & \multicolumn{1}{c}{Max} \\ 
 \hline \\[-1.8ex] 
-speed & 50 & 15.400 & 5.288 & 4 & 12 & 19 & 25 \\ 
-dist & 50 & 42.980 & 25.769 & 2 & 26 & 56 & 120 \\ 
+speed & 50 & 15.400 & 5.288 & 4 & 25 \\ 
+dist & 50 & 42.980 & 25.769 & 2 & 120 \\ 
 \hline \\[-1.8ex] 
 \end{tabular} 
 \end{table}
@@ -381,17 +411,17 @@ Table \ref{tab2} shows the output for a regression table. Make sure you name all
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{library}\NormalTok{(stargazer)}
-\NormalTok{model1 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(speed }\OperatorTok{~}\StringTok{ }\NormalTok{dist, }\DataTypeTok{data =}\NormalTok{ cars)}
-\NormalTok{model2 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(speed }\OperatorTok{~}\StringTok{ }\NormalTok{dist, }\DataTypeTok{data =}\NormalTok{ cars)}
-\NormalTok{model3 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(dist }\OperatorTok{~}\StringTok{ }\NormalTok{speed, }\DataTypeTok{data =}\NormalTok{ cars)}
-\KeywordTok{stargazer}\NormalTok{(model1, model2, model3,}
-          \DataTypeTok{title =} \StringTok{"Regression table with stargazer"}\NormalTok{,}
-          \DataTypeTok{label=}\StringTok{"tab2"}\NormalTok{, }
-          \DataTypeTok{table.placement =} \StringTok{"H"}\NormalTok{, }
-          \DataTypeTok{column.labels =} \KeywordTok{c}\NormalTok{(}\StringTok{"M1"}\NormalTok{, }\StringTok{"M2"}\NormalTok{, }\StringTok{"M3"}\NormalTok{),}
-          \DataTypeTok{model.numbers =} \OtherTok{FALSE}\NormalTok{,}
-          \DataTypeTok{header=}\OtherTok{FALSE}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(stargazer)}
+\NormalTok{model1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(speed }\SpecialCharTok{\textasciitilde{}}\NormalTok{ dist, }\AttributeTok{data =}\NormalTok{ cars)}
+\NormalTok{model2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(speed }\SpecialCharTok{\textasciitilde{}}\NormalTok{ dist, }\AttributeTok{data =}\NormalTok{ cars)}
+\NormalTok{model3 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(dist }\SpecialCharTok{\textasciitilde{}}\NormalTok{ speed, }\AttributeTok{data =}\NormalTok{ cars)}
+\FunctionTok{stargazer}\NormalTok{(model1, model2, model3,}
+          \AttributeTok{title =} \StringTok{"Regression table with stargazer"}\NormalTok{,}
+          \AttributeTok{label=}\StringTok{"tab2"}\NormalTok{, }
+          \AttributeTok{table.placement =} \StringTok{"H"}\NormalTok{, }
+          \AttributeTok{column.labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"M1"}\NormalTok{, }\StringTok{"M2"}\NormalTok{, }\StringTok{"M3"}\NormalTok{),}
+          \AttributeTok{model.numbers =} \ConstantTok{FALSE}\NormalTok{,}
+          \AttributeTok{header=}\ConstantTok{FALSE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -474,7 +504,7 @@ Inserting figures can be slightly more complicated. Ideally, we would produce an
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{plot}\NormalTok{(cars}\OperatorTok{$}\NormalTok{speed, cars}\OperatorTok{$}\NormalTok{dist)}
+\FunctionTok{plot}\NormalTok{(cars}\SpecialCharTok{$}\NormalTok{speed, cars}\SpecialCharTok{$}\NormalTok{dist)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -496,11 +526,11 @@ Same is true for ggplot2 as you can see in Figure \ref{fig:fig-2}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{mtcars}\OperatorTok{$}\NormalTok{cyl <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(mtcars}\OperatorTok{$}\NormalTok{cyl) }\CommentTok{# Convert cyl to factor}
-\KeywordTok{library}\NormalTok{(ggplot2)}
-\KeywordTok{ggplot}\NormalTok{(mtcars, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{wt, }\DataTypeTok{y=}\NormalTok{mpg, }\DataTypeTok{shape=}\NormalTok{cyl)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
-\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x=}\StringTok{"Weight (lb/1000)"}\NormalTok{, }\DataTypeTok{y =} \StringTok{"Miles/(US) gallon"}\NormalTok{, }
-       \DataTypeTok{shape=}\StringTok{"Number of }\CharTok{\textbackslash{}n}\StringTok{ Cylinders"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{theme_classic}\NormalTok{()}
+\NormalTok{mtcars}\SpecialCharTok{$}\NormalTok{cyl }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(mtcars}\SpecialCharTok{$}\NormalTok{cyl) }\CommentTok{\# Convert cyl to factor}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{ggplot}\NormalTok{(mtcars, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{wt, }\AttributeTok{y=}\NormalTok{mpg, }\AttributeTok{shape=}\NormalTok{cyl)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Weight (lb/1000)"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Miles/(US) gallon"}\NormalTok{, }
+       \AttributeTok{shape=}\StringTok{"Number of }\SpecialCharTok{\textbackslash{}n}\StringTok{ Cylinders"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_classic}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -516,7 +546,7 @@ Same is true for ggplot2 as you can see in Figure \ref{fig:fig-2}.
 \hypertarget{good-practices}{%
 \section{Good practices}\label{good-practices}}
 
-Every researcher has his own optimized setup. Currently I would recommend the following:
+Every researcher has his own optimized setup. Currently we would recommend the following:
 
 \begin{itemize}
 \tightlist
@@ -530,11 +560,11 @@ Every researcher has his own optimized setup. Currently I would recommend the fo
   \item
     Main file with text/code: ``paper.rmd'', ``report.rmd''
   \item
-    Data files: "data\_xxxxxx.*"
+    Data files: ``data\_xxxxxx.*''
   \item
-    Image files: "fig\_xxxxxx.*"
+    Image files: ``fig\_xxxxxx.*''
   \item
-    Tables files: "table\_xxxx.*"
+    Tables files: ``table\_xxxx.*''
   \item
     etc.
   \item
@@ -640,44 +670,47 @@ The github directory contains a wide variety of citation style files depending o
 \linespread{1}
 
 \hypertarget{refs}{}
-\leavevmode\hypertarget{ref-markdown2017}{}%
-Allaire, JJ, Jeffrey Horner, Vicent Marti, and Natacha Porte. 2017. \emph{Markdown: 'Markdown' Rendering for R}.
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-markdown2017}{}}%
+Allaire, JJ, Jeffrey Horner, Vicent Marti, and Natacha Porte. 2017. \emph{\href{https://CRAN.R-project.org/package=markdown}{Markdown: 'Markdown' Rendering for r}}.
 
-\leavevmode\hypertarget{ref-hlavac2013stargazer}{}%
-Hlavac, Marek. 2013. ``Stargazer: LaTeX Code and Ascii Text for Well-Formatted Regression and Summary Statistics Tables.'' \emph{URL: Http://CRAN. R-Project. Org/Package= Stargazer}.
+\leavevmode\vadjust pre{\hypertarget{ref-hlavac2013stargazer}{}}%
+Hlavac, Marek. 2013. {``Stargazer: LaTeX Code and ASCII Text for Well-Formatted Regression and Summary Statistics Tables.''} \emph{URL: Http://CRAN. R-Project. Org/Package= Stargazer}.
 
-\leavevmode\hypertarget{ref-Kirsop2005-ro}{}%
-Kirsop, Barbara and Leslie Chan. 2005. ``Transforming Access to Research Literature for Developing Countries.'' \emph{Serials Review} 31(4):246--55.
+\leavevmode\vadjust pre{\hypertarget{ref-Kirsop2005-ro}{}}%
+Kirsop, Barbara and Leslie Chan. 2005. {``Transforming Access to Research Literature for Developing Countries.''} \emph{Serials Review} 31(4):246--55.
 
-\leavevmode\hypertarget{ref-R2017}{}%
-R Core Team. 2017. \emph{R: A Language and Environment for Statistical Computing}. Vienna, Austria: R Foundation for Statistical Computing.
+\leavevmode\vadjust pre{\hypertarget{ref-R2017}{}}%
+R Core Team. 2017. \emph{\href{https://www.R-project.org/}{R: A Language and Environment for Statistical Computing}}. Vienna, Austria: R Foundation for Statistical Computing.
 
-\leavevmode\hypertarget{ref-Rstudio2015}{}%
-RStudio Team. 2015. \emph{RStudio: Integrated Development Environment for R}. Boston, MA: RStudio, Inc.
+\leavevmode\vadjust pre{\hypertarget{ref-Rstudio2015}{}}%
+RStudio Team. 2015. \emph{\href{http://www.rstudio.com/}{RStudio: Integrated Development Environment for r}}. Boston, MA: RStudio, Inc.
 
-\leavevmode\hypertarget{ref-plotly}{}%
-Sievert, Carson, Chris Parmer, Toby Hocking, Scott Chamberlain, Karthik Ram, Marianne Corvellec, and Pedro Despouy. 2017. \emph{Plotly: Create Interactive Web Graphics via 'Plotly.js'}.
+\leavevmode\vadjust pre{\hypertarget{ref-plotly}{}}%
+Sievert, Carson, Chris Parmer, Toby Hocking, Scott Chamberlain, Karthik Ram, Marianne Corvellec, and Pedro Despouy. 2017. \emph{\href{https://CRAN.R-project.org/package=plotly}{Plotly: Create Interactive Web Graphics via 'Plotly.js'}}.
 
-\leavevmode\hypertarget{ref-knitr3}{}%
-Xie, Yihui. 2014. ``Knitr: A Comprehensive Tool for Reproducible Research in R.'' in \emph{Implementing reproducible computational research}, edited by V. Stodden, F. Leisch, and R. D. Peng. Chapman; Hall/CRC.
+\leavevmode\vadjust pre{\hypertarget{ref-knitr3}{}}%
+Xie, Yihui. 2014. {``\href{http://www.crcpress.com/product/isbn/9781466561595}{Knitr: A Comprehensive Tool for Reproducible Research in {R}}.''} in \emph{Implementing reproducible computational research}, edited by V. Stodden, F. Leisch, and R. D. Peng. Chapman; Hall/CRC.
 
-\leavevmode\hypertarget{ref-knitr2}{}%
-Xie, Yihui. 2015. \emph{Dynamic Documents with R and Knitr}. 2nd ed. Boca Raton, Florida: Chapman; Hall/CRC.
+\leavevmode\vadjust pre{\hypertarget{ref-knitr2}{}}%
+Xie, Yihui. 2015. \emph{\href{https://yihui.name/knitr/}{Dynamic Documents with {R} and Knitr}}. 2nd ed. Boca Raton, Florida: Chapman; Hall/CRC.
 
-\leavevmode\hypertarget{ref-bookdown2}{}%
-Xie, Yihui. 2016. \emph{Bookdown: Authoring Books and Technical Documents with R Markdown}. Boca Raton, Florida: Chapman; Hall/CRC.
+\leavevmode\vadjust pre{\hypertarget{ref-bookdown2}{}}%
+Xie, Yihui. 2016. \emph{\href{https://github.com/rstudio/bookdown}{Bookdown: Authoring Books and Technical Documents with {R} Markdown}}. Boca Raton, Florida: Chapman; Hall/CRC.
 
-\leavevmode\hypertarget{ref-bookdown1}{}%
-Xie, Yihui. 2017. \emph{Bookdown: Authoring Books and Technical Documents with R Markdown}.
+\leavevmode\vadjust pre{\hypertarget{ref-bookdown1}{}}%
+Xie, Yihui. 2017. \emph{\href{https://github.com/rstudio/bookdown}{Bookdown: Authoring Books and Technical Documents with r Markdown}}.
 
-\leavevmode\hypertarget{ref-knitr1}{}%
-Xie, Yihui. 2018a. \emph{Knitr: A General-Purpose Package for Dynamic Report Generation in R}.
+\leavevmode\vadjust pre{\hypertarget{ref-knitr1}{}}%
+Xie, Yihui. 2018a. \emph{\href{https://yihui.name/knitr/}{Knitr: A General-Purpose Package for Dynamic Report Generation in r}}.
 
-\leavevmode\hypertarget{ref-tinytex}{}%
-Xie, Yihui. 2018b. \emph{Tinytex: Helper Functions to Install and Maintain 'Tex Live', and Compile 'Latex' Documents}.
+\leavevmode\vadjust pre{\hypertarget{ref-tinytex}{}}%
+Xie, Yihui. 2018b. \emph{\href{https://CRAN.R-project.org/package=tinytex}{Tinytex: Helper Functions to Install and Maintain 'TeX Live', and Compile 'LaTeX' Documents}}.
 
-\leavevmode\hypertarget{ref-kableextra}{}%
-Zhu, Hao. 2017. \emph{KableExtra: Construct Complex Table with 'Kable' and Pipe Syntax}.
+\leavevmode\vadjust pre{\hypertarget{ref-kableextra}{}}%
+Zhu, Hao. 2017. \emph{\href{https://CRAN.R-project.org/package=kableExtra}{kableExtra: Construct Complex Table with 'Kable' and Pipe Syntax}}.
+
+\end{CSLReferences}
 
 \clearpage
 
@@ -720,31 +753,33 @@ Online Appendix
 Since R and R packages are constantly evolving you might want to add the R session info that contains information on the R version as well as the packages that are loaded.
 
 \begin{verbatim}
-## R version 4.1.0 (2021-05-18)
-## Platform: x86_64-w64-mingw32/x64 (64-bit)
-## Running under: Windows 10 x64 (build 17763)
+## R version 4.2.2 (2022-10-31)
+## Platform: aarch64-apple-darwin20 (64-bit)
+## Running under: macOS Ventura 13.0.1
 ## 
 ## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRlapack.dylib
 ## 
 ## attached base packages:
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] ggplot2_3.3.4    kableExtra_1.3.4 knitr_1.33       stargazer_5.2.2 
+## [1] ggplot2_3.3.6    kableExtra_1.3.4 knitr_1.39       stargazer_5.2.3 
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] compiler_4.1.0    pillar_1.6.1      tools_4.1.0       digest_0.6.27    
-##  [5] evaluate_0.14     lifecycle_1.0.0   tibble_3.1.2      gtable_0.3.0     
-##  [9] viridisLite_0.4.0 pkgconfig_2.0.3   rlang_0.4.11      DBI_1.1.1        
-## [13] rstudioapi_0.13   yaml_2.2.1        xfun_0.24         withr_2.4.2      
-## [17] dplyr_1.0.6       httr_1.4.2        stringr_1.4.0     xml2_1.3.2       
-## [21] generics_0.1.0    vctrs_0.3.8       systemfonts_1.0.2 tidyselect_1.1.1 
-## [25] webshot_0.5.2     grid_4.1.0        svglite_2.0.0     glue_1.4.2       
-## [29] R6_2.5.0          fansi_0.5.0       rmarkdown_2.9     bookdown_0.22    
-## [33] farver_2.1.0      purrr_0.3.4       magrittr_2.0.1    scales_1.1.1     
-## [37] htmltools_0.5.1.1 ellipsis_0.3.2    assertthat_0.2.1  rvest_1.0.0      
-## [41] colorspace_2.0-1  labeling_0.4.2    utf8_1.2.1        stringi_1.6.1    
-## [45] munsell_0.5.0     crayon_1.4.1
+##  [1] compiler_4.2.2    pillar_1.7.0      tools_4.2.2       digest_0.6.29    
+##  [5] evaluate_0.15     lifecycle_1.0.1   tibble_3.1.7      gtable_0.3.0     
+##  [9] viridisLite_0.4.0 pkgconfig_2.0.3   rlang_1.0.6       DBI_1.1.2        
+## [13] cli_3.3.0         rstudioapi_0.13   yaml_2.3.5        xfun_0.37        
+## [17] fastmap_1.1.0     withr_2.5.0       dplyr_1.0.9       httr_1.4.3       
+## [21] stringr_1.4.0     xml2_1.3.3        generics_0.1.2    vctrs_0.4.1      
+## [25] systemfonts_1.0.4 tidyselect_1.1.2  webshot_0.5.3     grid_4.2.2       
+## [29] svglite_2.1.0     glue_1.6.2        R6_2.5.1          fansi_1.0.3      
+## [33] rmarkdown_2.20    bookdown_0.27     farver_2.1.0      purrr_0.3.4      
+## [37] magrittr_2.0.3    scales_1.2.0      htmltools_0.5.2   ellipsis_0.3.2   
+## [41] assertthat_0.2.1  rvest_1.0.2       colorspace_2.0-3  labeling_0.4.2   
+## [45] utf8_1.2.2        stringi_1.7.6     munsell_0.5.0     crayon_1.5.1
 \end{verbatim}
 
 \hypertarget{all-the-code-in-the-paper}{%
@@ -754,70 +789,71 @@ To simply attach all the code you used in the PDF file in the appendix see the R
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{knitr}\OperatorTok{::}\NormalTok{opts_chunk}\OperatorTok{$}\KeywordTok{set}\NormalTok{(}\DataTypeTok{cache =} \OtherTok{FALSE}\NormalTok{)}
-\CommentTok{# Use chache = TRUE if you want to speed up compilation}
+\NormalTok{knitr}\SpecialCharTok{::}\NormalTok{opts\_chunk}\SpecialCharTok{$}\FunctionTok{set}\NormalTok{(}\AttributeTok{cache =} \ConstantTok{FALSE}\NormalTok{)}
+\CommentTok{\# Use chache = TRUE if you want to speed up compilation}
 
-\CommentTok{# A function to allow for showing some of the inline code}
-\NormalTok{rinline <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(code)\{}
-\NormalTok{  html <-}\StringTok{ '<code  class="r">``` `r CODE` ```</code>'}
-  \KeywordTok{sub}\NormalTok{(}\StringTok{"CODE"}\NormalTok{, code, html)}
+\CommentTok{\# A function to allow for showing some of the inline code}
+\NormalTok{rinline }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(code)\{}
+\NormalTok{  html }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}\textless{}code  class="r"\textgreater{}\textasciigrave{}\textasciigrave{}\textasciigrave{} \textasciigrave{}r CODE\textasciigrave{} \textasciigrave{}\textasciigrave{}\textasciigrave{}\textless{}/code\textgreater{}\textquotesingle{}}
+  \FunctionTok{sub}\NormalTok{(}\StringTok{"CODE"}\NormalTok{, code, html)}
 \NormalTok{\}}
-\KeywordTok{install.packages}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{'tinytex'}\NormalTok{, }\StringTok{'rmarkdown'}\NormalTok{))}
-\NormalTok{tinytex}\OperatorTok{::}\KeywordTok{install_tinytex}\NormalTok{()}
-\KeywordTok{install.packages}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"rmarkdown"}\NormalTok{, }\StringTok{"knitr"}\NormalTok{, }\StringTok{"kableExtra"}\NormalTok{,}
+\FunctionTok{install.packages}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}tinytex\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}rmarkdown\textquotesingle{}}\NormalTok{))}
+\NormalTok{tinytex}\SpecialCharTok{::}\FunctionTok{install\_tinytex}\NormalTok{()}
+\FunctionTok{install.packages}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"rmarkdown"}\NormalTok{, }\StringTok{"knitr"}\NormalTok{, }\StringTok{"kableExtra"}\NormalTok{,}
                    \StringTok{"stargazer"}\NormalTok{, }\StringTok{"plotly"}\NormalTok{, }\StringTok{"knitr"}\NormalTok{,}
                    \StringTok{"bookdown"}\NormalTok{))}
-\KeywordTok{cat}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"#"}\NormalTok{, }\KeywordTok{capture.output}\NormalTok{(}\KeywordTok{sessionInfo}\NormalTok{()), }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\DataTypeTok{collapse =}\StringTok{""}\NormalTok{)) }
-  \CommentTok{# or use message() instead of cat()}
-\NormalTok{data <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"data.csv"}\NormalTok{)}
-\KeywordTok{head}\NormalTok{(data)}
-\KeywordTok{dput}\NormalTok{(data)}
-\NormalTok{data <-}\StringTok{ }\KeywordTok{structure}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\DataTypeTok{X =} \DecValTok{1}\OperatorTok{:}\DecValTok{50}\NormalTok{, }\DataTypeTok{speed =} \KeywordTok{c}\NormalTok{(4L, 4L, 7L, 7L, 8L, 9L, 10L, }
+\FunctionTok{cat}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"\#"}\NormalTok{, }\FunctionTok{capture.output}\NormalTok{(}\FunctionTok{sessionInfo}\NormalTok{()), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\AttributeTok{collapse =}\StringTok{""}\NormalTok{)) }
+  \CommentTok{\# or use message() instead of cat()}
+\NormalTok{data }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"data.csv"}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(data)}
+\FunctionTok{dput}\NormalTok{(data)}
+\NormalTok{data }\OtherTok{\textless{}{-}} \FunctionTok{structure}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\AttributeTok{X =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{50}\NormalTok{, }\AttributeTok{speed =} \FunctionTok{c}\NormalTok{(4L, 4L, 7L, 7L, 8L, 9L, 10L, }
 \NormalTok{10L, 10L, 11L, 11L, 12L, 12L, 12L, 12L, 13L, 13L, 13L, 13L, 14L, }
 \NormalTok{14L, 14L, 14L, 15L, 15L, 15L, 16L, 16L, 17L, 17L, 17L, 18L, 18L, }
 \NormalTok{18L, 18L, 19L, 19L, 19L, 20L, 20L, 20L, 20L, 20L, 22L, 23L, 24L, }
-\NormalTok{24L, 24L, 24L, 25L), }\DataTypeTok{dist =} \KeywordTok{c}\NormalTok{(2L, 10L, 4L, 22L, 16L, 10L, 18L, }
+\NormalTok{24L, 24L, 24L, 25L), }\AttributeTok{dist =} \FunctionTok{c}\NormalTok{(2L, 10L, 4L, 22L, 16L, 10L, 18L, }
 \NormalTok{26L, 34L, 17L, 28L, 14L, 20L, 24L, 28L, 26L, 34L, 34L, 46L, 26L, }
 \NormalTok{36L, 60L, 80L, 20L, 26L, 54L, 32L, 40L, 32L, 40L, 50L, 42L, 56L, }
 \NormalTok{76L, 84L, 36L, 46L, 68L, 32L, 48L, 52L, 56L, 64L, 66L, 54L, 70L, }
 \NormalTok{92L, 93L, 120L, 85L)), }
-\DataTypeTok{class =} \StringTok{"data.frame"}\NormalTok{, }\DataTypeTok{row.names =} \KeywordTok{c}\NormalTok{(}\OtherTok{NA}\NormalTok{, }
-\OperatorTok{-}\NormalTok{50L))}
-\KeywordTok{library}\NormalTok{(stargazer)}
-\KeywordTok{stargazer}\NormalTok{(cars, }
-          \DataTypeTok{title =} \StringTok{"Summary table with stargazer"}\NormalTok{,}
-          \DataTypeTok{label=}\StringTok{"tab1"}\NormalTok{, }
-          \DataTypeTok{table.placement =} \StringTok{"H"}\NormalTok{, }
-          \DataTypeTok{header=}\OtherTok{FALSE}\NormalTok{)}
-\KeywordTok{library}\NormalTok{(stargazer)}
-\NormalTok{model1 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(speed }\OperatorTok{~}\StringTok{ }\NormalTok{dist, }\DataTypeTok{data =}\NormalTok{ cars)}
-\NormalTok{model2 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(speed }\OperatorTok{~}\StringTok{ }\NormalTok{dist, }\DataTypeTok{data =}\NormalTok{ cars)}
-\NormalTok{model3 <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(dist }\OperatorTok{~}\StringTok{ }\NormalTok{speed, }\DataTypeTok{data =}\NormalTok{ cars)}
-\KeywordTok{stargazer}\NormalTok{(model1, model2, model3,}
-          \DataTypeTok{title =} \StringTok{"Regression table with stargazer"}\NormalTok{,}
-          \DataTypeTok{label=}\StringTok{"tab2"}\NormalTok{, }
-          \DataTypeTok{table.placement =} \StringTok{"H"}\NormalTok{, }
-          \DataTypeTok{column.labels =} \KeywordTok{c}\NormalTok{(}\StringTok{"M1"}\NormalTok{, }\StringTok{"M2"}\NormalTok{, }\StringTok{"M3"}\NormalTok{),}
-          \DataTypeTok{model.numbers =} \OtherTok{FALSE}\NormalTok{,}
-          \DataTypeTok{header=}\OtherTok{FALSE}\NormalTok{)}
-\KeywordTok{library}\NormalTok{(knitr)}
-\KeywordTok{library}\NormalTok{(kableExtra)}
-\KeywordTok{kable}\NormalTok{(cars[}\DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{,], }\DataTypeTok{row.names =} \OtherTok{TRUE}\NormalTok{, }
-      \DataTypeTok{caption =} \StringTok{'Table with kable() and kablestyling()'}\NormalTok{, }
-      \DataTypeTok{format =} \StringTok{"latex"}\NormalTok{, }\DataTypeTok{booktabs =}\NormalTok{ T) }\OperatorTok{%>%}
-\StringTok{        }\KeywordTok{kable_styling}\NormalTok{(}\DataTypeTok{full_width =}\NormalTok{ T, }
-                      \DataTypeTok{latex_options =} \KeywordTok{c}\NormalTok{(}\StringTok{"striped"}\NormalTok{, }
-                                        \StringTok{"scale_down"}\NormalTok{,}
-                                        \StringTok{"HOLD_position"}\NormalTok{),}
-                      \DataTypeTok{font_size =} \DecValTok{10}\NormalTok{)}
-\KeywordTok{plot}\NormalTok{(cars}\OperatorTok{$}\NormalTok{speed, cars}\OperatorTok{$}\NormalTok{dist)}
-\NormalTok{mtcars}\OperatorTok{$}\NormalTok{cyl <-}\StringTok{ }\KeywordTok{as.factor}\NormalTok{(mtcars}\OperatorTok{$}\NormalTok{cyl) }\CommentTok{# Convert cyl to factor}
-\KeywordTok{library}\NormalTok{(ggplot2)}
-\KeywordTok{ggplot}\NormalTok{(mtcars, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{wt, }\DataTypeTok{y=}\NormalTok{mpg, }\DataTypeTok{shape=}\NormalTok{cyl)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
-\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x=}\StringTok{"Weight (lb/1000)"}\NormalTok{, }\DataTypeTok{y =} \StringTok{"Miles/(US) gallon"}\NormalTok{, }
-       \DataTypeTok{shape=}\StringTok{"Number of }\CharTok{\textbackslash{}n}\StringTok{ Cylinders"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{theme_classic}\NormalTok{()}
-\KeywordTok{print}\NormalTok{(}\KeywordTok{sessionInfo}\NormalTok{(), }\DataTypeTok{local =} \OtherTok{FALSE}\NormalTok{)}
+\AttributeTok{class =} \StringTok{"data.frame"}\NormalTok{, }\AttributeTok{row.names =} \FunctionTok{c}\NormalTok{(}\ConstantTok{NA}\NormalTok{, }
+\SpecialCharTok{{-}}\NormalTok{50L))}
+\FunctionTok{library}\NormalTok{(stargazer)}
+\FunctionTok{stargazer}\NormalTok{(cars, }
+          \AttributeTok{title =} \StringTok{"Summary table with stargazer"}\NormalTok{,}
+          \AttributeTok{label=}\StringTok{"tab1"}\NormalTok{, }
+          \AttributeTok{table.placement =} \StringTok{"H"}\NormalTok{, }
+          \AttributeTok{header=}\ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(stargazer)}
+\NormalTok{model1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(speed }\SpecialCharTok{\textasciitilde{}}\NormalTok{ dist, }\AttributeTok{data =}\NormalTok{ cars)}
+\NormalTok{model2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(speed }\SpecialCharTok{\textasciitilde{}}\NormalTok{ dist, }\AttributeTok{data =}\NormalTok{ cars)}
+\NormalTok{model3 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(dist }\SpecialCharTok{\textasciitilde{}}\NormalTok{ speed, }\AttributeTok{data =}\NormalTok{ cars)}
+\FunctionTok{stargazer}\NormalTok{(model1, model2, model3,}
+          \AttributeTok{title =} \StringTok{"Regression table with stargazer"}\NormalTok{,}
+          \AttributeTok{label=}\StringTok{"tab2"}\NormalTok{, }
+          \AttributeTok{table.placement =} \StringTok{"H"}\NormalTok{, }
+          \AttributeTok{column.labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"M1"}\NormalTok{, }\StringTok{"M2"}\NormalTok{, }\StringTok{"M3"}\NormalTok{),}
+          \AttributeTok{model.numbers =} \ConstantTok{FALSE}\NormalTok{,}
+          \AttributeTok{header=}\ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(knitr)}
+\FunctionTok{library}\NormalTok{(kableExtra)}
+\FunctionTok{kable}\NormalTok{(cars[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{,], }\AttributeTok{row.names =} \ConstantTok{TRUE}\NormalTok{, }
+      \AttributeTok{caption =} \StringTok{\textquotesingle{}Table with kable() and kablestyling()\textquotesingle{}}\NormalTok{, }
+      \AttributeTok{format =} \StringTok{"latex"}\NormalTok{, }\AttributeTok{booktabs =}\NormalTok{ T) }\SpecialCharTok{\%\textgreater{}\%}
+        \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{full\_width =}\NormalTok{ T, }
+                      \AttributeTok{latex\_options =} \FunctionTok{c}\NormalTok{(}\StringTok{"striped"}\NormalTok{, }
+                                        \StringTok{"scale\_down"}\NormalTok{,}
+                                        \StringTok{"HOLD\_position"}\NormalTok{),}
+                      \AttributeTok{font\_size =} \DecValTok{10}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(cars}\SpecialCharTok{$}\NormalTok{speed, cars}\SpecialCharTok{$}\NormalTok{dist)}
+\NormalTok{mtcars}\SpecialCharTok{$}\NormalTok{cyl }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(mtcars}\SpecialCharTok{$}\NormalTok{cyl) }\CommentTok{\# Convert cyl to factor}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{ggplot}\NormalTok{(mtcars, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{wt, }\AttributeTok{y=}\NormalTok{mpg, }\AttributeTok{shape=}\NormalTok{cyl)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Weight (lb/1000)"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Miles/(US) gallon"}\NormalTok{, }
+       \AttributeTok{shape=}\StringTok{"Number of }\SpecialCharTok{\textbackslash{}n}\StringTok{ Cylinders"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_classic}\NormalTok{()}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{sessionInfo}\NormalTok{(), }\AttributeTok{local =} \ConstantTok{FALSE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
 
 \end{document}
