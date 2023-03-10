@@ -3,11 +3,11 @@ title: |
   |
   | 
   | \vspace{1cm}Writing a reproducible paper
-  | in R Markdown^[Corresponding address: mail@paulcbauer.eu. Acknowledgments: I am grateful to all those generous people that invest their time into open-source software.]\vspace{0.5cm}
+  | in R Markdown^[Corresponding address: mail@paulcbauer.de. Acknowledgments: We are grateful to all those generous people that invest their time into open-source software.]\vspace{0.5cm}
   |
-author: |
-  | Paul C. Bauer
-  | Mannheim Centre for European Social Research
+author:
+  - Paul Bauer, Mannheim Centre for European Social Research
+  - Camille Landesvatter, Mannheim Centre for European Social Research
 date: |
   |       
   | First version: December 14, 2018
@@ -21,7 +21,7 @@ date: |
   | Try [Pagedown](https://github.com/rstudio/pagedown) with our [new template](https://osf.io/k8jhx/)! :-)
 linestretch: 1.2
 colorlinks: true
-abstract: \noindent\setstretch{1}The present paper provides a template for a reproducible scientific paper written in R Markdown. Below I outline some of the "tricks"/code (e.g., referencing tables, sections etc.) I had to figure out to produce this document. The underlying files which produce this document can be downloaded [here](https://drive.google.com/drive/folders/1zJP3cNPrHN-gj0rcmbHQgg-XA0hqDXdd?usp=sharing). I think I got pretty far but there is always room for improvement and more automatization, in parallel to the incredible developments in R and Rstudio (bookdown etc.). I intend to update this file when I discover more convenient code (you can follow any updates through the corresponding [github repo](https://github.com/paulcbauer/Writing_a_reproducable_paper_in_rmarkdown/)).\vspace{.8cm}
+abstract: \noindent\setstretch{1}The present paper provides a template for a reproducible scientific paper written in R Markdown. Below we outline some of the "tricks"/code (e.g., referencing tables, sections etc.) we had to figure out to produce this document. The underlying files which produce this document can be downloaded [here](https://drive.google.com/drive/folders/1zJP3cNPrHN-gj0rcmbHQgg-XA0hqDXdd?usp=sharing). We think we got pretty far but there is always room for improvement and more automatization, in parallel to the incredible developments in R and Rstudio (bookdown etc.). We intend to update this file when we discover more convenient code (you can follow any updates through the corresponding [github repo](https://github.com/paulcbauer/Writing_a_reproducable_paper_in_rmarkdown/)).\vspace{.8cm}
 bibliography: references.bib
 csl: american-sociological-association.csl
 output:
@@ -67,7 +67,7 @@ Some arguments...
 
 
 # Prerequesites
-I assume that you are using R on a day-to-day basis. You may have even started to work a little in R Markdown but you don't write your complete paper in R Markdown. If you don't know what R Markdown is watch [this short video](https://vimeo.com/178485416). Then...
+We assume that you are using R on a day-to-day basis. You may have even started to work a little in R Markdown but you don't write your complete paper in R Markdown. If you don't know what R Markdown is watch [this short video](https://vimeo.com/178485416). Then...
 
 * ...install [R](https://www.r-project.org/) and [Rstudio](https://www.rstudio.com/) (most recent versions) [@R2017; @Rstudio2015].
 * ...install [tinytex](https://yihui.name/tinytex/), a lightweight version of Tex Live [@markdown2017; @tinytex].
@@ -81,7 +81,7 @@ install.packages(c("rmarkdown", "knitr", "kableExtra",
                    "stargazer", "plotly", "knitr",
                    "bookdown"))
 ```
-* ...download the 5 input files I created --- `paper.rmd`, `references.bib`, `data.csv` and `american-sociological-association.csl` --- from [this folder](https://drive.google.com/drive/folders/1zJP3cNPrHN-gj0rcmbHQgg-XA0hqDXdd?usp=sharing). Ignore the other files.
+* ...download the 5 input files we created --- `paper.rmd`, `references.bib`, `data.csv` and `american-sociological-association.csl` --- from [this folder](https://drive.google.com/drive/folders/1zJP3cNPrHN-gj0rcmbHQgg-XA0hqDXdd?usp=sharing). Ignore the other files.
 
 * ...learn R and read about the other underlying components namely [Markdown](https://en.wikipedia.org/wiki/Markdown), [R Markdown](https://rmarkdown.rstudio.com/lesson-1.html) and [Latex](https://en.wikipedia.org/wiki/LaTeX).
 
@@ -90,7 +90,7 @@ All the files you need to produce the present PDF file are the input files...
 
 * ...a `paper.rmd` file (the underlying R Markdown file).
 * ...a `references.bib` file (the bibliography).
-    + I use paperpile to manage my references and export the `.bib` file into the folder that contains my `.rmd` file.
+    + We use paperpile to manage my references and export the `.bib` file into the folder that contains my `.rmd` file.
 * ...a `data.csv` file (some raw data).
 * ... a `american-sociological-association.csl` file that defines the style of your bibliography.^[You can download various citation style files from this webpage: https://github.com/citation-style-language/styles.] 
 
@@ -109,13 +109,13 @@ Below we always display the R code in the chunks that produce the output. In you
 
 # Referencing within your document
 
-To see how referencing works simply see the different examples for figures, tables and sections below. For instance in Section \@ref(sec:tables) you can find different ways of referencing tables. The code of the underlying `paper.rmd` will show you how I referenced Section \@ref(sec:tables) right here namely with '`Section \@ref(sec:tables)`'.
+To see how referencing works simply see the different examples for figures, tables and sections below. For instance in Section \@ref(sec:tables) you can find different ways of referencing tables. The code of the underlying `paper.rmd` will show you how we referenced Section \@ref(sec:tables) right here namely with '`Section \@ref(sec:tables)`'.
 
 
 # Software versioning
 Software changes and gets updated, especially with an active developer community like that of R. Luckily you can always access [old versions of R](https://cran.r-project.org/bin/windows/base/old/) and old version of R packages in [the archive](https://cran.r-project.org/src/contrib/Archive/). In the archive you need to choose a particular package, e.g dplyr and search for the right version, e.g., `dplyr_0.2.tar.gz`. Then insert the path in the following function: `install.packages("https://....../dplyr_0.2.tar.gz", repos=NULL, type="source")`. Ideally, however, results will be simply reproducible in the most current R and package versions.
 
-I would recommend to use the command below and simply add it to the appendix as I did here in Appendix \@ref(sec:rsessioninfo). This will make sure you always provide the package versions that you used in the last compilation of your paper. For more advanced tools see [packrat](https://rstudio.github.io/packrat/).
+We would recommend to use the command below and simply add it to the appendix as we did here in Appendix \@ref(sec:rsessioninfo). This will make sure you always provide the package versions that you used in the last compilation of your paper. For more advanced tools see [packrat](https://rstudio.github.io/packrat/).
 
 ```{r fig-versioning, echo=TRUE, eval=FALSE}
 cat(paste("#", capture.output(sessionInfo()), "\n", collapse ="")) 
@@ -160,7 +160,7 @@ Producing good tables and referencing these tables within a R Markdown PDF has b
 
 ## stargazer(): Summary and regression tables
 
-Table \@ref(tab1) shows summary stats of your data.^[To reference the table where you set the identifier in the stargazer function you only need to use the actual label, i.e., ´tab1´.] I normally use `stargazer()` [@hlavac2013stargazer] which offers extreme flexibility regarding table output (see `?stargazer`). 
+Table \@ref(tab1) shows summary stats of your data.^[To reference the table where you set the identifier in the stargazer function you only need to use the actual label, i.e., ´tab1´.] We normally use `stargazer()` [@hlavac2013stargazer] which offers extreme flexibility regarding table output (see `?stargazer`). 
 
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE, results="asis"}
@@ -236,7 +236,7 @@ ggplot(mtcars, aes(x=wt, y=mpg, shape=cyl)) + geom_point() +
 
 
 # Good practices
-Every researcher has his own optimized setup. Currently I would recommend the following:
+Every researcher has his own optimized setup. Currently we would recommend the following:
 
 * Keep all files of your project (that matter for producing the PDF) in one folder without subfolders. You can zip and directly upload that folder to the [Harvard dataverse](https://dataverse.harvard.edu/).
 * Make sure that filenames have a logic to them.
