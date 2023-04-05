@@ -14,14 +14,14 @@ date: |
   | This version: `r gsub("^0", "", format(Sys.time(), "%B %d, %Y"))`
   | Download: https://osf.io/q395s
   |
-  | Feedback? Errors? mail@paulcbauer.eu
+  | Feedback? Errors? mail@paulcbauer.de
   | [Github repository](https://github.com/paulcbauer/Writing_a_reproducable_paper_in_rmarkdown/)
   |
   | Tired of Latex?
   | Try [Pagedown](https://github.com/rstudio/pagedown) with our [new template](https://osf.io/k8jhx/)! :-)
 linestretch: 1.2
 colorlinks: true
-abstract: \noindent\setstretch{1}The present paper provides a template for a reproducible scientific paper written in R Markdown. Below we outline some of the "tricks"/code (e.g., referencing tables, sections etc.) we had to figure out to produce this document. The underlying files which produce this document can be downloaded [here](https://drive.google.com/drive/folders/1zJP3cNPrHN-gj0rcmbHQgg-XA0hqDXdd?usp=sharing). We think we got pretty far but there is always room for improvement and more automatization, in parallel to the incredible developments in R and Rstudio (bookdown etc.). We intend to update this file when we discover more convenient code (you can follow any updates through the corresponding [github repo](https://github.com/paulcbauer/Writing_a_reproducable_paper_in_rmarkdown/)).\vspace{.8cm}
+abstract: \noindent\setstretch{1}The present paper provides a template for a reproducible scientific paper written in R Markdown. Below we outline some of the "tricks"/code (e.g., referencing tables, sections etc.) we had to figure out to produce this document. The underlying files which produce this document can be downloaded [here](https://github.com/paulcbauer/Writing_a_reproducable_paper_in_rmarkdown) (click on Code -> Download ZIP). We think we got pretty far but there is always room for improvement and more automatization, in parallel to the incredible developments in R and Rstudio (bookdown etc.). We intend to update this file when we discover more convenient code (you can follow any updates through the corresponding [Github repo](https://github.com/paulcbauer/Writing_a_reproducable_paper_in_rmarkdown/)).\vspace{.8cm}
 bibliography: references.bib
 csl: american-sociological-association.csl
 output:
@@ -81,7 +81,7 @@ install.packages(c("rmarkdown", "knitr", "kableExtra",
                    "stargazer", "plotly", "knitr",
                    "bookdown"))
 ```
-* ...download the 5 input files we created --- `paper.rmd`, `references.bib`, `data.csv` and `american-sociological-association.csl` --- from [this folder](https://drive.google.com/drive/folders/1zJP3cNPrHN-gj0rcmbHQgg-XA0hqDXdd?usp=sharing). Ignore the other files.
+* ...download the 5 input files we created --- `paper.rmd`, `references.bib`, `data.csv` and `american-sociological-association.csl` --- from [Github](https://github.com/paulcbauer/Writing_a_reproducable_paper_in_rmarkdown) (click on Code -> Download ZIP). Ignore the other files.
 
 * ...learn R and read about the other underlying components namely [Markdown](https://en.wikipedia.org/wiki/Markdown), [R Markdown](https://rmarkdown.rstudio.com/lesson-1.html) and [Latex](https://en.wikipedia.org/wiki/LaTeX).
 
@@ -94,7 +94,7 @@ All the files you need to produce the present PDF file are the input files...
 * ...a `data.csv` file (some raw data).
 * ... a `american-sociological-association.csl` file that defines the style of your bibliography.^[You can download various citation style files from this webpage: https://github.com/citation-style-language/styles.] 
 
-[Download these files](https://drive.google.com/drive/folders/1zJP3cNPrHN-gj0rcmbHQgg-XA0hqDXdd?usp=sharing) and save them into a folder. Close R/Rstudio and directly open `paper.rmd` with RStudio. Doing so assures that the working directory is set to the folder that contains `paper.rmd` and the other files.^[You can always check your working directory in R with `getwd()`.]
+[Download these files from Github](https://github.com/paulcbauer/Writing_a_reproducable_paper_in_rmarkdown) (click on Code -> Download ZIP) and save them into a folder. Close R/Rstudio and directly open `paper.rmd` with RStudio. Doing so assures that the working directory is set to the folder that contains `paper.rmd` and the other files.^[You can always check your working directory in R with `getwd()`.]
 
 Once you run/compile the `paper.rmd` file in Rstudio it creates mainly two output files:
 
@@ -276,9 +276,9 @@ Every researcher has his own optimized setup. Currently we would recommend the f
 # Citation styles
 If your study needs to follow a particular citation style, you can set the corresponding style in the header of your `.rmd` document. To do so you have to download the corresponding `.csl` file.     
 
-In the present document we use the style of the American Sociological Association and set it in the preamble with `csl: american-sociological-association.csl`. However, you also need to download the respective `.csl` file from the following github page: https://github.com/citation-style-language/styles and copy it into your working directory for it to work.     
+In the present document we use the style of the American Sociological Association and set it in the preamble with `csl: american-sociological-association.csl`. However, you also need to download the respective `.csl` file from the following Github page: https://github.com/citation-style-language/styles and copy it into your working directory for it to work.     
 
-The github directory contains a wide variety of citation style files depending on what discipline you work in.
+The Github directory contains a wide variety of citation style files depending on what discipline you work in.
 
 
 
