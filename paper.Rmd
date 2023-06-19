@@ -1,8 +1,7 @@
 ---
 title: |
-  |
   | 
-  | \vspace{1cm}Writing a reproducible paper
+  | \vspace{0.7cm}Writing a reproducible paper
   | in R Markdown^[Corresponding address: mail@paulcbauer.de. Acknowledgments: We are grateful to all those generous people that invest their time into open-source software.]\vspace{0.5cm}
   |
 author:
@@ -12,7 +11,7 @@ date: |
   |       
   | First version: December 14, 2018
   | This version: `r gsub("^0", "", format(Sys.time(), "%B %d, %Y"))`
-  | Download: https://osf.io/q395s
+  | Download this Paper on OSF: https://osf.io/q395s
   |
   | Feedback? Errors? mail@paulcbauer.de
   | [Github repository](https://github.com/paulcbauer/Writing_a_reproducable_paper_in_rmarkdown/)
@@ -21,11 +20,11 @@ date: |
   | Try [Pagedown](https://github.com/rstudio/pagedown) with our [new template](https://osf.io/k8jhx/)! :-)
 linestretch: 1.2
 colorlinks: true
-abstract: \noindent\setstretch{1}The present paper provides a template for a reproducible scientific paper written in R Markdown. Below we outline some of the "tricks"/code (e.g., referencing tables, sections etc.) we had to figure out to produce this document. The underlying files which produce this document can be downloaded [here](https://github.com/paulcbauer/Writing_a_reproducable_paper_in_rmarkdown) (click on Code -> Download ZIP). We think we got pretty far but there is always room for improvement and more automatization, in parallel to the incredible developments in R and Rstudio (bookdown etc.). We intend to update this file when we discover more convenient code (you can follow any updates through the corresponding [Github repo](https://github.com/paulcbauer/Writing_a_reproducable_paper_in_rmarkdown/)).\vspace{.8cm}
+abstract: \noindent\setstretch{1}The present paper provides a template for a reproducible scientific paper written in R Markdown. Below, we outline some of the "tricks"/code (e.g., referencing tables, sections, etc.) we had to figure out to produce this document. The underlying files which produce this document can be downloaded [here](https://github.com/paulcbauer/Writing_a_reproducable_paper_in_rmarkdown) (click on Code -> Download ZIP). We think we got pretty far, but there is always room for improvement and more automatization, in parallel to the incredible developments in R and Rstudio (e.g., bookdown). We intend to update this file when we discover more convenient code and you can follow any updates through the corresponding [Github repo](https://github.com/paulcbauer/Writing_a_reproducable_paper_in_rmarkdown/).\vspace{.8cm}
 bibliography: references.bib
 csl: american-sociological-association.csl
 output:
-  pdf_document:
+  bookdown::pdf_document2:
     toc: no
     keep_tex: true
 mainfont: Times New Roman
@@ -60,14 +59,14 @@ rinline <- function(code){
 # Why reproducible research (in R)?
 Some arguments...
 
-* **Access**: Research is normally funded by taxpayers (researchers are also taxpayers). Hence, it should be freely accessible to everyone without any barriers, e.g., without requiring commercial software. Importantly, researchers from developing countries are even more dependent on free access to knowledge [@Kirsop2005-ro].
-* **Reproducability**: Even if you have written a study and analyzed the data yourself you will forget what you did after a few months. A fully reproducible setup will help you to trace back your own steps. Obviously, the same is true for other researchers who may want to understand your work and built on it. It may sound like a joke but why not aim for a document that can be used to reproduce your findings in 500 years. 
-* **Errors**: Manual steps in data analysis (e.g., manually copy/pasting values into a table etc.) may introduce errors. R Markdown allows you to **automatize** such steps and/or avoid them.
-* **Revisions**: Revising a paper takes much less time if you have all the code you need in one place, i.e., one `.rmd` file. For instance, if you decide to exclude a subset of your data you simply need to insert one line of your code at the beginning and everything is rebuilt/re-estimated automatically.
+* **Access**: Research is typically funded by taxpayers (and researchers are also taxpayers). Hence, it should be freely accessible to everyone without any barriers, such as the requirement of commercial software. Importantly, researchers from developing countries are particularly dependent on free access to knowledge [@Kirsop2005-ro].
+* **Reproducibility**: Even if you have conducted a study and analyzed the data yourself, you may forget the steps taken after a few months. A fully reproducible setup will help you retrace your own steps. Additionally, other researchers who wish to understand and build upon your work will benefit from reproducibility. It may sound like a joke, but why not aim for a document that can be used to reproduce your findings even after 500 years?
+* **Errors**: Manual steps in data analysis, such as manually copying/pasting values into a table, can introduce errors. R Markdown allows you to automate such steps and/or avoid them.
+* **Revisions**: Revising a paper takes much less time if you have all the code you need in one place, i.e., one .rmd file. For instance, if you decide to exclude a subset of your data, you simply need to insert one line of code at the beginning, and everything is automatically rebuilt/re-estimated.
 
 
-# Prerequesites
-We assume that you are using R on a day-to-day basis. You may have even started to work a little in R Markdown but you don't write your complete paper in R Markdown. If you don't know what R Markdown is watch [this short video](https://vimeo.com/178485416). Then...
+# Prerequisites
+We assume that you are using R on a day-to-day basis. You may have even started to work a little in R Markdown, but you don't write your complete paper in R Markdown. If you don't know what R Markdown is, watch [this short video](https://vimeo.com/178485416). Then...
 
 * ...install [R](https://www.r-project.org/) and [Rstudio](https://www.rstudio.com/) (most recent versions) [@R2017; @Rstudio2015].
 * ...install [tinytex](https://yihui.name/tinytex/), a lightweight version of Tex Live [@markdown2017; @tinytex].
@@ -163,7 +162,7 @@ Producing good tables and referencing these tables within a R Markdown PDF has b
 Table \@ref(tab1) shows summary stats of your data.^[To reference the table where you set the identifier in the stargazer function you only need to use the actual label, i.e., ´tab1´.] We normally use `stargazer()` [@hlavac2013stargazer] which offers extreme flexibility regarding table output (see `?stargazer`). 
 
 
-```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE, results="asis"}
+```{r tab1, echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE, results="asis"}
 library(stargazer)
 stargazer(cars, 
           title = "Summary table with stargazer",
@@ -205,15 +204,11 @@ kable(cars[1:10,], row.names = TRUE,
                       font_size = 10)
 ```
 
-# Inline code & results
-Reproduction reaches new heights when you work with inline code. For instance, you can automatize the display of certain coefficients within the text. An example is to include estimates, e.g., the coefficient of `dist` of the model we ran above. `r rinline("round(coef(model1)[2], 2)")` will insert the coefficient as follows: `r round(coef(model1)[2], 2)`. Or `r rinline("3 + 7")` will insert a `r 3 + 7` in the text.      
-Inline code/results that depend on earlier objects in your document will automatically be updated once you change those objects. For instance, imagine a reviewer asks you to omit certain observations from your sample. You can simply do so in the beginning of your code and push play subsequently.. at time you might have to set `cache = FALSE` at the beginning so that all the code chunks are rerun.    
-Researchers often avoid referring to results in-text etc. because you easily forget to change them when revising a manuscript. At the same it can make an article much more informative and easier to read, e.g., if you discuss a coefficient in the text you can directly show it in the section in which you discuss it. Inline code allows you to do just that. R Markdown allows you to that do so in a reproducible and automatized manner.
-
 # Figures
 
 ## R base graphs
-Inserting figures can be slightly more complicated. Ideally, we would produce and insert them directly in the `.rmd` file. It's relatively simple to insert R base graphs as you can see in Figure \@ref(fig:fig-1).
+
+Inserting figures can be slightly more complicated. Ideally, we would produce and insert them directly in the `.rmd` file. It's relatively simple to insert R base graphs as you can see in Figure \@ref(fig:fig-1))
 
 ```{r fig-1, fig.align="center", fig.cap="Scatterplot of Speed and Distance", fig.pos="H", message=FALSE, warning=FALSE, paged.print=FALSE}
 plot(cars$speed, cars$dist)
@@ -224,7 +219,7 @@ But it turns out that it doesn't always work so well.
 ## ggplot2 graphs
 Same is true for ggplot2 as you can see in Figure \@ref(fig:fig-2).
 
-```{r fig-2, fig.align="center", fig.cap="Miles per gallon according to the weight", fig.pos="H", fig.width=6, fig.height=3, message=FALSE, warning=FALSE, paged.print=FALSE}
+```{r fig-2, fig.align="center", fig.cap="Miles per gallon according to the weight", fig.pos="H", fig.width=6, fig.height=3, message=FALSE, warning=FALSE, paged.print=FALSE, echo=F}
 mtcars$cyl <- as.factor(mtcars$cyl) # Convert cyl to factor
 library(ggplot2)
 ggplot(mtcars, aes(x=wt, y=mpg, shape=cyl)) + geom_point() +
@@ -232,7 +227,10 @@ ggplot(mtcars, aes(x=wt, y=mpg, shape=cyl)) + geom_point() +
        shape="Number of \n Cylinders") + theme_classic()
 ``` 
 
-
+# Inline code & results
+Reproduction reaches new heights when you work with inline code. For instance, you can automatize the display of certain coefficients within the text. An example is to include estimates, e.g., the coefficient of `dist` of the model we ran above. `r rinline("round(coef(model1)[2], 2)")` will insert the coefficient as follows: `r round(coef(model1)[2], 2)`. Or `r rinline("3 + 7")` will insert a `r 3 + 7` in the text.      
+Inline code/results that depend on earlier objects in your document will automatically be updated once you change those objects. For instance, imagine a reviewer asks you to omit certain observations from your sample. You can simply do so in the beginning of your code and push play subsequently.. at time you might have to set `cache = FALSE` at the beginning so that all the code chunks are rerun.    
+Researchers often avoid referring to results in-text etc. because you easily forget to change them when revising a manuscript. At the same it can make an article much more informative and easier to read, e.g., if you discuss a coefficient in the text you can directly show it in the section in which you discuss it. Inline code allows you to do just that. R Markdown allows you to that do so in a reproducible and automatized manner.
 
 
 # Good practices
