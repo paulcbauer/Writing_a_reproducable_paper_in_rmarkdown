@@ -231,13 +231,13 @@ We assume that you are using R on a day-to-day basis. You may have even started 
 \begin{itemize}
 \tightlist
 \item
-  \ldots install the packages below using the code below (\protect\hyperlink{ref-plotly}{Sievert et al. 2017}; \protect\hyperlink{ref-knitr3}{Xie 2014}, \protect\hyperlink{ref-knitr2}{2015}, \protect\hyperlink{ref-bookdown2}{2016}, \protect\hyperlink{ref-bookdown1}{2017}, \protect\hyperlink{ref-knitr1}{2018a}; \protect\hyperlink{ref-kableextra}{Zhu 2017}).
+  \ldots install the packages below using the code below (\protect\hyperlink{ref-knitr3}{Xie 2014}, \protect\hyperlink{ref-knitr2}{2015}, \protect\hyperlink{ref-bookdown2}{2016}, \protect\hyperlink{ref-bookdown1}{2017}, \protect\hyperlink{ref-knitr1}{2018a}; \protect\hyperlink{ref-kableextra}{Zhu 2017}).
 \end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{install.packages}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"rmarkdown"}\NormalTok{, }\StringTok{"knitr"}\NormalTok{, }\StringTok{"kableExtra"}\NormalTok{,}
-                   \StringTok{"stargazer"}\NormalTok{, }\StringTok{"plotly"}\NormalTok{, }\StringTok{"knitr"}\NormalTok{,}
+                   \StringTok{"stargazer"}\NormalTok{, }\StringTok{"knitr"}\NormalTok{,}
                    \StringTok{"bookdown"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
@@ -284,11 +284,18 @@ Once you run/compile the \texttt{paper.rmd} file in Rstudio it creates mainly tw
   \texttt{paper.pdf} (the one you are reading right now)
 \end{itemize}
 
-In addition, there may be files that you generate and store locally in the folder during the compilation process. This is the case for some of the Plotly graphs below.
+In addition, there may be files that you generate and store locally in the folder during the compilation process (e.g., plotly graphs).
 
-Ideally, we can simply provide others with a \texttt{zip} folder that contains both our input files and our output files. Then it's possible to reproduce the process from managing/analyzing some raw data to producing the final scientific article.
+Ideally, we can share a \texttt{zip} folder that includes both our input and output files, allowing others to replicate the entire process from managing and analyzing raw data to producing the final scientific article.
 
-Below we always display the R code in the chunks that produce the output. In your paper you will normally only present outputs (e.g., tables, figures etc.) by choosing the chunk option ``Show output only'' in R Studio. The chunk commands itself are not displayed but they do matter for referencing etc. So simply orient yourself at the underlying \texttt{paper.rmd} file.
+\hypertarget{code-chunk-options}{%
+\section{Code Chunk Options}\label{code-chunk-options}}
+
+In the examples provided below, we always display the R code within the chunks that produce the respective output. In your own paper, you would typically present only the outputs such as tables and figures. To achieve this, you can choose the ``Show output only'' option for code chunks in R Studio. To configure the display options, locate the specific code chunk and click the gear icon in the top-right corner to open the chunk options menu.
+
+Alternatively, you can manually edit the code chunk options, which is a quicker approach. For example, to hide the underlying code and display only the output, you can use the option ``echo=False'' within the chunk options.
+
+The chunk options themselves are not displayed in the manuscript, but they matter for referencing etc. For more guidance, please refer to the underlying \texttt{paper.rmd} file.
 
 \hypertarget{referencing-within-your-document}{%
 \section{Referencing within your document}\label{referencing-within-your-document}}
@@ -335,7 +342,7 @@ We would recommend to use the command below and simply add it to the appendix as
 \hypertarget{putting-your-entire-data-into-the-.rmd-file}{%
 \subsection{Putting your entire data into the .rmd file}\label{putting-your-entire-data-into-the-.rmd-file}}
 
-Applying the function \texttt{dput()} to an object gives you the code needed to reproduce that object. So you could paste that code into your \texttt{.rmd} file if you don't want to have extra data files. This makes sense were data files are small.
+By applying the function \texttt{dput()} to an object, you can obtain the code needed to reproduce that object.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -356,7 +363,7 @@ Applying the function \texttt{dput()} to an object gives you the code needed to 
 ## -50L))
 \end{verbatim}
 
-You can then insert the dput output in your \texttt{.rmd} as below.
+This code can be directly pasted into your \texttt{.rmd} file (see below), eliminating the need for separate data files. This approach is particularly useful when working with small data files.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -382,14 +389,14 @@ Producing good tables and referencing these tables within a R Markdown PDF has b
 \hypertarget{stargazer-summary-and-regression-tables}{%
 \subsection{stargazer(): Summary and regression tables}\label{stargazer-summary-and-regression-tables}}
 
-Table \ref{tab1} shows summary stats of your data.\footnote{To reference the table where you set the identifier in the stargazer function you only need to use the actual label, i.e., ´tab1´.} We normally use \texttt{stargazer()} (\protect\hyperlink{ref-hlavac2013stargazer}{Hlavac 2013}) which offers extreme flexibility regarding table output (see \texttt{?stargazer}).
+Table \ref{tab-1} shows summary stats of your data.\footnote{To reference the table where you set the identifier in the stargazer function you only need to use the actual label, i.e., ´tab-1´.} Here, we use \texttt{stargazer()} (\protect\hyperlink{ref-hlavac2013stargazer}{Hlavac 2013}), which offers extreme flexibility regarding table output (see \texttt{?stargazer}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(stargazer)}
 \FunctionTok{stargazer}\NormalTok{(cars, }
           \AttributeTok{title =} \StringTok{"Summary table with stargazer"}\NormalTok{,}
-          \AttributeTok{label=}\StringTok{"tab1"}\NormalTok{, }
+          \AttributeTok{label=}\StringTok{"tab{-}1"}\NormalTok{, }
           \AttributeTok{table.placement =} \StringTok{"H"}\NormalTok{, }
           \AttributeTok{header=}\ConstantTok{FALSE}\NormalTok{)}
 \end{Highlighting}
@@ -397,7 +404,7 @@ Table \ref{tab1} shows summary stats of your data.\footnote{To reference the tab
 
 \begin{table}[H] \centering 
   \caption{Summary table with stargazer} 
-  \label{tab1} 
+  \label{tab-1} 
 \begin{tabular}{@{\extracolsep{5pt}}lccccc} 
 \\[-1.8ex]\hline 
 \hline \\[-1.8ex] 
@@ -409,7 +416,7 @@ dist & 50 & 42.980 & 25.769 & 2 & 120 \\
 \end{tabular} 
 \end{table}
 
-Table \ref{tab2} shows the output for a regression table. Make sure you name all your models and explicitly refer to model names (M1, M2 etc.) in the text.
+Table \ref{tab-2} shows the output for a regression table. Make sure you name all your models and explicitly refer to model names (M1, M2 etc.) in the text.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -419,7 +426,7 @@ Table \ref{tab2} shows the output for a regression table. Make sure you name all
 \NormalTok{model3 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(dist }\SpecialCharTok{\textasciitilde{}}\NormalTok{ speed, }\AttributeTok{data =}\NormalTok{ cars)}
 \FunctionTok{stargazer}\NormalTok{(model1, model2, model3,}
           \AttributeTok{title =} \StringTok{"Regression table with stargazer"}\NormalTok{,}
-          \AttributeTok{label=}\StringTok{"tab2"}\NormalTok{, }
+          \AttributeTok{label=}\StringTok{"tab{-}2"}\NormalTok{, }
           \AttributeTok{table.placement =} \StringTok{"H"}\NormalTok{, }
           \AttributeTok{column.labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"M1"}\NormalTok{, }\StringTok{"M2"}\NormalTok{, }\StringTok{"M3"}\NormalTok{),}
           \AttributeTok{model.numbers =} \ConstantTok{FALSE}\NormalTok{,}
@@ -429,7 +436,7 @@ Table \ref{tab2} shows the output for a regression table. Make sure you name all
 
 \begin{table}[H] \centering 
   \caption{Regression table with stargazer} 
-  \label{tab2} 
+  \label{tab-2} 
 \begin{tabular}{@{\extracolsep{5pt}}lccc} 
 \\[-1.8ex]\hline 
 \hline \\[-1.8ex] 
@@ -462,11 +469,11 @@ F Statistic (df = 1; 48) & 89.567$^{***}$ & 89.567$^{***}$ & 89.567$^{***}$ \\
 \hypertarget{kable-and-kable_styling}{%
 \subsection{kable() and kable\_styling()}\label{kable-and-kable_styling}}
 
-Another great function is \texttt{kable()} (\texttt{knitr} package) in combination with \texttt{kableExtra}. Table \ref{tab:tab3} provides an example.\footnote{To reference the table produced by the chunk you need to add ´tab:´ to the chunk name, i.e., ´tab:tab3´.} Again you can modify so many things in both the \texttt{kable()} and the \texttt{kable\_styling()} function. See \href{https://haozhu233.github.io/kableExtra/awesome_table_in_pdf.pdf}{this overview} of all the kable stylings that are possible provided by the package author himself.
+Another great function is \texttt{kable()} (\texttt{knitr} package) in combination with \texttt{kableExtra}. Table \ref{tab:tab-3} provides an example.\footnote{To reference the table produced by the chunk you need to add ´tab:´ to the chunk name, i.e., ´tab:tab-3´.} Again, you can modify various aspects of the table output using both the \texttt{kable()} and the \texttt{kable\_styling()} functions. See \href{https://haozhu233.github.io/kableExtra/awesome_table_in_pdf.pdf}{this overview} of all the kable stylings that are possible provided by the package author himself.
 
 \begin{table}[H]
 
-\caption{\label{tab:tab3}Table with kable() and kablestyling()}
+\caption{\label{tab:tab-3}Table with kable() and kablestyling()}
 \centering
 \resizebox{\linewidth}{!}{
 \fontsize{10}{12}\selectfont
@@ -495,7 +502,7 @@ Another great function is \texttt{kable()} (\texttt{knitr} package) in combinati
 \hypertarget{r-base-graphs}{%
 \subsection{R base graphs}\label{r-base-graphs}}
 
-Inserting figures can be slightly more complicated. Ideally, we would produce and insert them directly in the \texttt{.rmd} file. It's relatively simple to insert R base graphs as you can see in Figure \ref{fig:fig-1})
+Ideally, we also produce and insert our figures directly in the \texttt{.rmd} file. Below, in Figure \ref{fig:fig-1}, we insert a R base graph.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -512,12 +519,10 @@ Inserting figures can be slightly more complicated. Ideally, we would produce an
 \caption{Scatterplot of Speed and Distance}\label{fig:fig-1}
 \end{figure}
 
-But it turns out that it doesn't always work so well.
-
 \hypertarget{ggplot2-graphs}{%
 \subsection{ggplot2 graphs}\label{ggplot2-graphs}}
 
-Same is true for ggplot2 as you can see in Figure \ref{fig:fig-2}.
+We can also generate and insert a ggplot2 graph, as demonstrated in Figure \ref{fig:fig-2}.
 
 \begin{figure}[H]
 
@@ -531,9 +536,9 @@ Same is true for ggplot2 as you can see in Figure \ref{fig:fig-2}.
 \hypertarget{inline-code-results}{%
 \section{Inline code \& results}\label{inline-code-results}}
 
-Reproduction reaches new heights when you work with inline code. For instance, you can automatize the display of certain coefficients within the text. An example is to include estimates, e.g., the coefficient of \texttt{dist} of the model we ran above. \texttt{\textasciigrave{}r\ round(coef(model1){[}2{]},\ 2)\textasciigrave{}} will insert the coefficient as follows: 0.17. Or \texttt{\textasciigrave{}r\ 3\ +\ 7\textasciigrave{}} will insert a 10 in the text.\\
-Inline code/results that depend on earlier objects in your document will automatically be updated once you change those objects. For instance, imagine a reviewer asks you to omit certain observations from your sample. You can simply do so in the beginning of your code and push play subsequently.. at time you might have to set \texttt{cache\ =\ FALSE} at the beginning so that all the code chunks are rerun.\\
-Researchers often avoid referring to results in-text etc. because you easily forget to change them when revising a manuscript. At the same it can make an article much more informative and easier to read, e.g., if you discuss a coefficient in the text you can directly show it in the section in which you discuss it. Inline code allows you to do just that. R Markdown allows you to that do so in a reproducible and automatized manner.
+Reproduction reaches new heights when you work with inline code. For instance, you can automate the display of certain coefficients within the text. An example is to include estimates, such as the coefficient of \texttt{dist} of the model we ran above. \texttt{\textasciigrave{}r\ round(coef(model1){[}2{]},\ 2)\textasciigrave{}} will insert the coefficient as follows: 0.17. Similarly, using inlince code like \texttt{\textasciigrave{}r\ 3\ +\ 7\textasciigrave{}} will insert a 10 in the text.\\
+Inline code and results that depend on earlier objects in your document will automatically be updated once you change those objects. For instance, imagine a reviewer asks you to omit certain observations from your sample. You can simply do so at the beginning of your code and then proceed. However, at times, you might need to set \texttt{cache\ =\ FALSE} at the beginning so that all the code chunks are rerun.\\
+Researchers often avoid referring to results in-text because it's easy to forget to change them when revising a manuscript. However, it can make an article much more informative and easier to read. For example, if you discuss a coefficient in the text, you can directly show it in the section where you discuss it. Inline code allows you to do just that. R Markdown enables you to do so in a reproducible and automated manner.
 
 \hypertarget{good-practices}{%
 \section{Good practices}\label{good-practices}}
@@ -543,9 +548,9 @@ Every researcher has his own optimized setup. Currently we would recommend the f
 \begin{itemize}
 \tightlist
 \item
-  Keep all files of your project (that matter for producing the PDF) in one folder without subfolders. You can zip and directly upload that folder to the \href{https://dataverse.harvard.edu/}{Harvard dataverse}.
+  Keep all files of your project (that matter for producing the PDF) in one folder without subfolders. Once you have done so, you can conveniently package the files by zipping the folder. This compressed file can then be directly uploaded to platforms such as the \href{https://dataverse.harvard.edu/}{Harvard dataverse}. In addition, it is beneficial to create a .Rproj file for your project.
 \item
-  Make sure that filenames have a logic to them.
+  Make sure that filenames are logical and meaningful.
 
   \begin{itemize}
   \tightlist
@@ -565,7 +570,7 @@ Every researcher has his own optimized setup. Currently we would recommend the f
 \item
   Use the document outline in R studio (Ctrl + Shift + O) when you work with R Markdown.
 \item
-  Name rchunks according to what they do or produce:
+  Name code chunks according to what they do or produce:
 
   \begin{itemize}
   \tightlist
@@ -581,9 +586,9 @@ Every researcher has his own optimized setup. Currently we would recommend the f
     ``\texttt{recoding-...}'' for chunks in which data is recoded
   \end{itemize}
 \item
-  Ideally give chunks the labels of the figures/tables in the final publication, e.g., ``\texttt{fig-1}'' is the name of the chunk that produces Figure 1 in the final paper.
+  Ideally give code chunks the labels of the figures/tables in the final publication, e.g., ``\texttt{fig-1}'' is the name of the chunk that produces Figure 1 in the final paper.
 \item
-  Use ``really'' informative variable names:
+  Use informative variable names:
 
   \begin{itemize}
   \tightlist
@@ -596,7 +601,7 @@ Every researcher has his own optimized setup. Currently we would recommend the f
       How could we call this variable instead? Yes, \texttt{trust.european.parliament} which is longer but will probably be understood by another researcher.
     \end{itemize}
   \item
-    If your setup is truly reproducible you will probably re-use the variable names that you generate as variable names in the tables you produce. Hence, there is an incentive to use good names.
+    If your setup is reproducible, it's likely that you'll reuse the variable names you generate as column names in the tables you produce. Therefore, there's an incentive to use descriptive and meaningful variable names.
   \end{itemize}
 \item
   Use unique identifiers in the final document:
@@ -631,12 +636,12 @@ Every researcher has his own optimized setup. Currently we would recommend the f
   \begin{itemize}
   \tightlist
   \item
-    Use adobe acrobat (commerical software) to convert your file to a word file. Then open in word and delete all the parts that shouldn't go into the word count. The word count is displayed in the lower right.
+    Knit your .Rmd to a Word (.docx) file, open it in Word, and delete any parts that should not be included in the word count. You can find the word count displayed in the lower right corner of the document.
   \item
-    Use an one of the online services to count your words (search for ``pdf word count'')
+    Use a online service to count your words (search for ``pdf word count'')
   \end{itemize}
 \item
-  Appendix: You can change the numbering format for the appendix in the rmd file
+  Appendix: You can change the numbering format for the appendix in the .Rmd file
 
   \begin{itemize}
   \tightlist
@@ -677,9 +682,6 @@ R Core Team. 2017. \emph{\href{https://www.R-project.org/}{R: A Language and Env
 
 \leavevmode\vadjust pre{\hypertarget{ref-Rstudio2015}{}}%
 RStudio Team. 2015. \emph{\href{http://www.rstudio.com/}{RStudio: Integrated Development Environment for r}}. Boston, MA: RStudio, Inc.
-
-\leavevmode\vadjust pre{\hypertarget{ref-plotly}{}}%
-Sievert, Carson, Chris Parmer, Toby Hocking, Scott Chamberlain, Karthik Ram, Marianne Corvellec, and Pedro Despouy. 2017. \emph{\href{https://CRAN.R-project.org/package=plotly}{Plotly: Create Interactive Web Graphics via 'Plotly.js'}}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-knitr3}{}}%
 Xie, Yihui. 2014. {``\href{http://www.crcpress.com/product/isbn/9781466561595}{Knitr: A Comprehensive Tool for Reproducible Research in {R}}.''} in \emph{Implementing reproducible computational research}, edited by V. Stodden, F. Leisch, and R. D. Peng. Chapman; Hall/CRC.
@@ -782,8 +784,7 @@ To simply attach all the code you used in the PDF file in the appendix see the R
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{knitr}\SpecialCharTok{::}\NormalTok{opts\_chunk}\SpecialCharTok{$}\FunctionTok{set}\NormalTok{(}\AttributeTok{cache =} \ConstantTok{FALSE}\NormalTok{)}
-\CommentTok{\# Use chache = TRUE if you want to speed up compilation}
-
+\CommentTok{\# Use cache = TRUE if you want to speed up compilation}
 \CommentTok{\# A function to allow for showing some of the inline code}
 \NormalTok{rinline }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(code)\{}
 \NormalTok{  html }\OtherTok{\textless{}{-}} \StringTok{\textquotesingle{}\textless{}code  class="r"\textgreater{}\textasciigrave{}\textasciigrave{}\textasciigrave{} \textasciigrave{}r CODE\textasciigrave{} \textasciigrave{}\textasciigrave{}\textasciigrave{}\textless{}/code\textgreater{}\textquotesingle{}}
@@ -792,7 +793,7 @@ To simply attach all the code you used in the PDF file in the appendix see the R
 \FunctionTok{install.packages}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}tinytex\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}rmarkdown\textquotesingle{}}\NormalTok{))}
 \NormalTok{tinytex}\SpecialCharTok{::}\FunctionTok{install\_tinytex}\NormalTok{()}
 \FunctionTok{install.packages}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"rmarkdown"}\NormalTok{, }\StringTok{"knitr"}\NormalTok{, }\StringTok{"kableExtra"}\NormalTok{,}
-                   \StringTok{"stargazer"}\NormalTok{, }\StringTok{"plotly"}\NormalTok{, }\StringTok{"knitr"}\NormalTok{,}
+                   \StringTok{"stargazer"}\NormalTok{, }\StringTok{"knitr"}\NormalTok{,}
                    \StringTok{"bookdown"}\NormalTok{))}
 \FunctionTok{cat}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"\#"}\NormalTok{, }\FunctionTok{capture.output}\NormalTok{(}\FunctionTok{sessionInfo}\NormalTok{()), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\AttributeTok{collapse =}\StringTok{""}\NormalTok{)) }
   \CommentTok{\# or use message() instead of cat()}
@@ -813,7 +814,7 @@ To simply attach all the code you used in the PDF file in the appendix see the R
 \FunctionTok{library}\NormalTok{(stargazer)}
 \FunctionTok{stargazer}\NormalTok{(cars, }
           \AttributeTok{title =} \StringTok{"Summary table with stargazer"}\NormalTok{,}
-          \AttributeTok{label=}\StringTok{"tab1"}\NormalTok{, }
+          \AttributeTok{label=}\StringTok{"tab{-}1"}\NormalTok{, }
           \AttributeTok{table.placement =} \StringTok{"H"}\NormalTok{, }
           \AttributeTok{header=}\ConstantTok{FALSE}\NormalTok{)}
 \FunctionTok{library}\NormalTok{(stargazer)}
@@ -822,7 +823,7 @@ To simply attach all the code you used in the PDF file in the appendix see the R
 \NormalTok{model3 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(dist }\SpecialCharTok{\textasciitilde{}}\NormalTok{ speed, }\AttributeTok{data =}\NormalTok{ cars)}
 \FunctionTok{stargazer}\NormalTok{(model1, model2, model3,}
           \AttributeTok{title =} \StringTok{"Regression table with stargazer"}\NormalTok{,}
-          \AttributeTok{label=}\StringTok{"tab2"}\NormalTok{, }
+          \AttributeTok{label=}\StringTok{"tab{-}2"}\NormalTok{, }
           \AttributeTok{table.placement =} \StringTok{"H"}\NormalTok{, }
           \AttributeTok{column.labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"M1"}\NormalTok{, }\StringTok{"M2"}\NormalTok{, }\StringTok{"M3"}\NormalTok{),}
           \AttributeTok{model.numbers =} \ConstantTok{FALSE}\NormalTok{,}
